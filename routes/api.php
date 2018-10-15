@@ -9,7 +9,8 @@ $api->version('v1', [
 ], function ($api) {
     $api->get('estates', 'EstatesController@index');
     $api->get('estate', 'EstatesController@show');
-
+    $api->get('estatearticles', 'EstateArticlesController@index');
+    $api->get('estatearticle', 'EstateArticlesController@show');
 });
 
 $api->version('v2', function ($api) {
