@@ -10,4 +10,9 @@ class Estate extends Model
     {
         return $this->hasMany('App\Models\EstateImage', 'estate_id', 'id');
     }
+
+    public function showSelect()
+    {
+        return $this->pluck('title', 'id');
+    }
 }

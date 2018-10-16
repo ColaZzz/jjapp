@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Estate;
+use App\Models\EstateArticle;
 
 class EstatesController extends Controller
 {
@@ -16,8 +17,37 @@ class EstatesController extends Controller
     public function show(Request $request)
     {
         $id = $request->id;
-        $estate = Estate::find($id);
-        $estate->estateImages;
+        // $estate = Estate::find($id);
+        // $estate->estateImages;
+        // return $this->resData('返回id为'.$id.'的数据', '1', $estate);
+
+        $estate = Estate::where('id', $id)->with(['estateImages' => function ($query) {
+            $query->orderBy('rank', 'desc');
+        }])->first();
         return $this->resData('返回id为'.$id.'的数据', '1', $estate);
+    }
+
+    public function showSelect()
+    {
+        $estates = Estate::get();
+        $rows = array();
+        foreach ($estates as $estate) {
+            $row['id'] = $estate->id;
+            $row['text'] = $estate->title;
+            array_push($rows, $row);
+        }
+        return $rows;
+    }
+
+    public function showSelectArticle()
+    {
+        $estateArticles = EstateArticle::get();
+        $rows = array();
+        foreach ($estateArticles as $estateArticle) {
+            $row['id'] = $estateArticles->id;
+            $row['text'] = $estateArticles->title;
+            array_push($rows, $row);
+        }
+        return $rows;
     }
 }

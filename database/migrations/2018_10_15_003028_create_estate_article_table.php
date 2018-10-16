@@ -21,7 +21,7 @@ class CreateEstateArticleTable extends Migration
             $table->string('house_area');
             $table->string('payment_proprotion');
             $table->string('direction');
-            $table->string('content');
+            $table->string('content')->nullable();
             $table->timestamps();
         });
     }

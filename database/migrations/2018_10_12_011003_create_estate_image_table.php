@@ -17,6 +17,7 @@ class CreateEstateImageTable extends Migration
             $table->increments('id');
             $table->integer('estate_id')->comment('外键');
             $table->text('imgurl')->comment('图片地址');
+            $table->integer('rank')->nullable()->comment('排位');
             $table->timestamps();
         });
     }

@@ -11,6 +11,9 @@ $api->version('v1', [
     $api->get('estate', 'EstatesController@show');
     $api->get('estatearticles', 'EstateArticlesController@index');
     $api->get('estatearticle', 'EstateArticlesController@show');
+
+    // 后台
+    $api->get('selectionoftitle', 'EstatesController@showSelect');
 });
 
 $api->version('v2', function ($api) {
