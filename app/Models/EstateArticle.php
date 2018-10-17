@@ -10,7 +10,7 @@ class EstateArticle extends Model
 
     public function estateArticleImages()
     {
-        return $this->hasMany('App\Models\EstateArticleImage', 'estatearticle_id', 'id');
+        return $this->hasMany('App\Models\EstateArticleImage', 'estate_article_id', 'id');
     }
 
     public function estate(){

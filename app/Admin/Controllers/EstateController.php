@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Models\Estate;
+use App\Models\EstateArticle;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Form;

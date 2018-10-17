@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Models\EstateArticleImage;
+use App\Models\EstateArticle;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Form;
@@ -81,13 +82,38 @@ class EstateArticleImageController extends Controller
     {
         $grid = new Grid(new EstateArticleImage);
 
-        $grid->id('Id');
-        // $grid->estate()->title('名称')->label('primary');
+        //默认弹出筛选
+        $grid->expandFilter();
+        
+        $grid->filter(function($filter){
+
+            // 去掉默认的id过滤器
+            $filter->disableIdFilter();
+        
+            // 在这里添加字段过滤器
+            $filter->where(function ($query) {
+
+                $query->whereHas('estateArticle', function ($query) {
+                    $query->where('id', "{$this->input}");
+                });
+            
+            }, '户型ID');
+        });
+
+        // 列操作按钮 查看、编辑、删除
+        $grid->actions(function ($actions) {
+            // $actions->disableDelete();
+            // $actions->disableEdit();
+            $actions->disableView();
+        });
+
+        // $grid->id('Id');
+        $grid->estate_article_id('户型ID')->label('danger');
         $grid->estateArticle()->title('户型')->label('primary');
-        // $grid->estatearticle_id('Estatearticle id');
-        $grid->imgurl('Imgurl');
-        $grid->created_at('Created at');
-        $grid->updated_at('Updated at');
+        $grid->imgurl('图片')->image();
+        $grid->rank('排序（数字越大表示越靠前）');
+        $grid->created_at('创建时间');
+        $grid->updated_at('最后更新');
 
         return $grid;
     }
@@ -103,10 +129,11 @@ class EstateArticleImageController extends Controller
         $show = new Show(EstateArticleImage::findOrFail($id));
 
         $show->id('Id');
-        $show->estatearticle_id('Estatearticle id');
-        $show->imgurl('Imgurl');
-        $show->created_at('Created at');
-        $show->updated_at('Updated at');
+        $show->estate_article_id('户型ID');
+        $show->imgurl('图片')->image();
+        $show->rank('排序');
+        $show->created_at('创建时间');
+        $show->updated_at('最后更新');
 
         return $show;
     }
@@ -120,8 +147,9 @@ class EstateArticleImageController extends Controller
     {
         $form = new Form(new EstateArticleImage);
 
-        $form->number('estatearticle_id', 'Estatearticle id');
-        $form->textarea('imgurl', 'Imgurl');
+        $form->number('estate_article_id', '户型ID');
+        $form->image('imgurl', '图片')->uniqueName();
+        $form->number('rank', '排序');
 
         return $form;
     }

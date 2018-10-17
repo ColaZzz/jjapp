@@ -81,6 +81,9 @@ class EstateImageController extends Controller
     {
         $grid = new Grid(new EstateImage);
 
+        //默认弹出筛选
+        $grid->expandFilter();
+        
         $grid->filter(function($filter){
 
             // 去掉默认的id过滤器
@@ -100,7 +103,7 @@ class EstateImageController extends Controller
         // $grid->estate_id('Estate id');
         $grid->estate()->title('名称')->label('primary');
         $grid->imgurl('图片')->image();
-        $grid->rank('排位（越大表示越靠前）');
+        $grid->rank('排序（数字越大表示越靠前）');
         $grid->created_at('创建时间');
         $grid->updated_at('最后更新');
 
@@ -121,7 +124,7 @@ class EstateImageController extends Controller
         // $show->estate_id('Estate id');
         $show->estate()->title('名称');
         $show->imgurl('图片')->image();
-        $show->rank('排位');
+        $show->rank('排序');
         $show->created_at('创建时间');
         $show->updated_at('最后更新');
 
@@ -138,8 +141,8 @@ class EstateImageController extends Controller
         $form = new Form(new EstateImage);
 
         $form->select('estate_id', 'Estate id')->options('/api/selectionoftitle');
-        $form->image('imgurl', 'Imgurl')->uniqueName();
-        $form->number('rank', '排位');
+        $form->image('imgurl', '图片')->uniqueName();
+        $form->number('rank', '排序');
 
         return $form;
     }

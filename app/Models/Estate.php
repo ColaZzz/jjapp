@@ -15,4 +15,10 @@ class Estate extends Model
     {
         return $this->pluck('title', 'id');
     }
+
+    // 远程关联 EstateArticleImage
+    public function estateArticleImages()
+    {
+        return $this->hasManyThrough('EstateArticleImage', 'EstateArticle', 'estate_id', 'estate_article_id', 'id', 'id');
+    }
 }
