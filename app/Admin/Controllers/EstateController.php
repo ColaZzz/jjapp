@@ -91,17 +91,17 @@ class EstateController extends Controller
         // $grid->icon_url('Icon url');
         // $grid->img_url('Img url');
         // $grid->flag('Flag');
-        $grid->state_time('开盘时间');
-        $grid->sell_address('销售地址');
-        $grid->property_year('产权年限');
-        $grid->decoration('装修');
-        $grid->development_company('开发商');
-        $grid->greening('绿化率');
-        $grid->place_area('占地面积');
-        $grid->house_area('住宅面积');
-        $grid->property_costs('物业费');
-        $grid->property_company('物业公司');
-        $grid->telephone('电话');
+        // $grid->state_time('开盘时间');
+        // $grid->sell_address('销售地址');
+        // $grid->property_year('产权年限');
+        // $grid->decoration('装修');
+        // $grid->development_company('开发商');
+        // $grid->greening('绿化率');
+        // $grid->place_area('占地面积');
+        // $grid->house_area('住宅面积');
+        // $grid->property_costs('物业费');
+        // $grid->property_company('物业公司');
+        // $grid->telephone('电话');
         $grid->created_at('创建时间');
         $grid->updated_at('最后更新');
 

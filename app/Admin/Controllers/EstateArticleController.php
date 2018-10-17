@@ -88,7 +88,7 @@ class EstateArticleController extends Controller
         $grid->house_area('房屋面积');
         $grid->payment_proprotion('首付比例');
         $grid->direction('朝向');
-        $grid->content('简介');
+        // $grid->content('简介');
         $grid->created_at('创建时间');
         $grid->updated_at('最后更新');
 
