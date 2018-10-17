@@ -10,21 +10,29 @@ class EstatesController extends Controller
 {
     public function index()
     {
-        $estates = Estate::get();
-        return $this->resData('返回全部数据', 1, $estates);
+        try {
+            $estates = Estate::get();
+            return $this->resData('返回全部数据', 1, $estates);
+        } catch (\Exception $e) {
+            return $this->resData($e, 0);
+        }
     }
 
     public function show(Request $request)
     {
-        $id = $request->id;
+        try {
+            $id = $request->id;
         // $estate = Estate::find($id);
         // $estate->estateImages;
         // return $this->resData('返回id为'.$id.'的数据', '1', $estate);
 
-        $estate = Estate::where('id', $id)->with(['estateImages' => function ($query) {
-            $query->orderBy('rank', 'desc');
-        }])->first();
-        return $this->resData('返回id为'.$id.'的数据', '1', $estate);
+            $estate = Estate::where('id', $id)->with(['estateImages' => function ($query) {
+                $query->orderBy('rank', 'desc');
+            }])->first();
+            return $this->resData('返回id为' . $id . '的数据', '1', $estate);
+        } catch (\Exception $e) {
+            return $this->resData($e, 0);
+        }
     }
 
     public function showSelect()

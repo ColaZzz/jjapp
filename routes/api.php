@@ -10,6 +10,11 @@ $api->version('v1', [
     'limit' => config('api.rate_limits.access.limit'),
     'expires' => config('api.rate_limits.access.expires'),
 ], function ($api) {
+    // 商业
+    $api->get('business', 'BusinessController@index');
+    $api->get('businessarticle', 'BusinessArticleController@index');
+    
+    // 住宅
     $api->get('estates', 'EstatesController@index');
     $api->get('estate', 'EstatesController@show');
     $api->get('estatearticles', 'EstateArticlesController@index');

@@ -9,17 +9,25 @@ class EstateArticlesController extends Controller
 {
     public function index(Request $request)
     {
-        $id = $request->id;
-        $obj = new EstateArticle();
-        $estateArticles = $obj->showAllRows($id);
-        return $this->resData('返回全部数据', 1, $estateArticles);
+        try {
+            $id = $request->id;
+            $obj = new EstateArticle();
+            $estateArticles = $obj->showAllRows($id);
+            return $this->resData('返回全部数据', 1, $estateArticles);
+        } catch (\Exception $e) {
+            return $this->resData($e, 0);
+        }
     }
 
     public function show(Request $request)
     {
-        $id = $request->id;
-        $obj = new EstateArticle();
-        $estateArticles = $obj->showRows($id);
-        return $this->resData('返回全部数据', 1, $estateArticles);
+        try {
+            $id = $request->id;
+            $obj = new EstateArticle();
+            $estateArticles = $obj->showRows($id);
+            return $this->resData('返回全部数据', 1, $estateArticles);
+        } catch (\Exception $e) {
+            return $this->resData($e, 0);
+        }
     }
 }
