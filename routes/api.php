@@ -12,7 +12,8 @@ $api->version('v1', [
 ], function ($api) {
     // 商业
     $api->get('business', 'BusinessController@index');
-    $api->get('businessarticle', 'BusinessArticleController@index');
+    $api->get('businessarticles', 'BusinessArticleController@index');
+    $api->get('businessarticle', 'BusinessArticleController@show');
     
     // 住宅
     $api->get('estates', 'EstatesController@index');

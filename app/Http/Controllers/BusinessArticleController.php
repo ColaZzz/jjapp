@@ -22,7 +22,9 @@ class BusinessArticleController extends Controller
     {
         try{
             $id = $request->id;
-            
+            $obj = new BusinessArticle();
+            $businessArticle = $obj->showRows($id);
+            return $this->resData('返回商业文章', 1, $businessArticle);
         }catch(\Exception $e){
             return $this->resData($e, 0);
         }
