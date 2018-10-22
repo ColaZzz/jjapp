@@ -21,7 +21,9 @@ class BusinessArticleTableSeeder extends Seeder
                 'information' => 'https://img.alicdn.com/imgextra/i1/3981779975/O1CN012NYbDpEsmMK9drn_!!3981779975.jpg_2200x2200Q90s50.jpg_.webp',
                 'position' => '1F118',
                 'telephone' => '123456',
-                'rank' => 1
+                'rank' => 1,
+                'flag' => 0,
+                'indexpage' => 1
             ],
             [
                 'business_id' => 1,
@@ -32,7 +34,9 @@ class BusinessArticleTableSeeder extends Seeder
                 'information' => 'https://img.alicdn.com/imgextra/i2/2616970884/TB2_vlTXJknBKNjSZKPXXX6OFXa_!!2616970884.jpg_2200x2200Q90s50.jpg_.webp',
                 'position' => '-1F100',
                 'telephone' => '122333',
-                'rank' => 2
+                'rank' => 2,
+                'flag' => 0,
+                'indexpage' => 1
             ],
         ];
         DB::table('business_article')->insert($list);

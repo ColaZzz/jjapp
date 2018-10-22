@@ -7,11 +7,12 @@ use App\Models\BusinessArticle;
 
 class BusinessArticleController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         try {
+            $id = $request->id;
             $BusinessArticle = new BusinessArticle();
-            $businessArticles = $BusinessArticle->showAllBusinessArticle();
+            $businessArticles = $BusinessArticle->showAllBusinessArticle($id);
             return $this->resData('返回商业全部文章', 1, $businessArticles);
         } catch (\Exception $e) {
             return $this->resData($e, 0);

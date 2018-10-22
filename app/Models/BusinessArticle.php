@@ -19,9 +19,9 @@ class BusinessArticle extends Model
     }
     
     // 返回商业文章全部的信息
-    public function showAllBusinessArticle()
+    public function showAllBusinessArticle($id)
     {
-        $businessArticles = $this->orderBy('rank', 'desc')->get();
+        $businessArticles = $this->orderBy('rank', 'desc')->where('business_id', $id)->get();
         return $businessArticles; 
     }
 

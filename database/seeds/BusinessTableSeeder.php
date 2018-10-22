@@ -20,7 +20,10 @@ class BusinessTableSeeder extends Seeder
                 'icon_url' => '',
                 'img_url' => 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=371772476,1548437417&fm=26&gp=0.jpg',
                 'telephone' => '123456',
-                'flag' => '0'
+                'flag' => 0,
+                'rank' => 99,
+                'latitude' => 23.770814,
+                'longitude' => 114.720472
             ],
             [
                 'title' => '桃花水母大剧院',
@@ -30,7 +33,10 @@ class BusinessTableSeeder extends Seeder
                 'icon_url' => '',
                 'img_url' => 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=551434039,3124566442&fm=26&gp=0.jpg',
                 'telephone' => '123456',
-                'flag' => '0'
+                'flag' => 0,
+                'rank' => 95,
+                'latitude' => 23.771786,
+                'longitude' => 114.717361
             ],
         ];
         DB::table('business')->insert($list);

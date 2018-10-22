@@ -21,6 +21,10 @@ $api->version('v1', [
     $api->get('estatearticles', 'EstateArticlesController@index');
     $api->get('estatearticle', 'EstateArticlesController@show');
 
+    // 首页推荐
+    $api->get('indexpage', 'IndexController@index');
+    $api->get('indexcolumn', 'IndexController@column');
+
     // 后台
     $api->get('selectionoftitle', 'EstatesController@showSelect');
 });

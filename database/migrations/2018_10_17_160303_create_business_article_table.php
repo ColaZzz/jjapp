@@ -20,10 +20,12 @@ class CreateBusinessArticleTable extends Migration
             $table->string('subtitle')->comment('副标题');
             $table->text('content')->comment('简介');
             $table->text('img_url')->comment('封面图片');
-            $table->text('information')->comment('基础信息');
-            $table->string('position')->comment('定位');
-            $table->string('telephone')->comment('电话');
-            $table->integer('rank')->comment('排序');
+            $table->text('information')->nullable()->comment('基础信息');
+            $table->string('position')->nullable()->comment('定位');
+            $table->string('telephone')->nullable()->comment('电话');
+            $table->integer('rank')->nullable()->comment('排序');
+            $table->integer('flag')->nullable()->comment('类型标识');
+            $table->integer('indexpage')->nullable()->comment('是否显示在封面');
             $table->timestamps();
         });
     }

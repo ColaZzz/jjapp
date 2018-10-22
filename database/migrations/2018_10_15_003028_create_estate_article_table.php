@@ -17,11 +17,16 @@ class CreateEstateArticleTable extends Migration
             $table->increments('id');
             $table->integer('estate_id');
             $table->string('title');
+            $table->string('subtitle');
             $table->string('total');
             $table->string('house_area');
             $table->string('payment_proprotion');
+            $table->text('img_url');
             $table->string('direction');
-            $table->string('content')->nullable();
+            $table->string('content')->nullable()->nullable();
+            $table->integer('flag')->nullable()->comment('类型标识');
+            $table->integer('rank')->nullable()->comment('排序');
+            $table->integer('indexpage')->nullable()->comment('是否显示在封面');
             $table->timestamps();
         });
     }
