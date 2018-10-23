@@ -25,6 +25,9 @@ $api->version('v1', [
     $api->get('indexpage', 'IndexController@index');
     $api->get('indexcolumn', 'IndexController@column');
 
+    // 地图
+    $api->get('map', 'IndexController@map');
+
     // 后台
     $api->get('selectionoftitle', 'EstatesController@showSelect');
 });
