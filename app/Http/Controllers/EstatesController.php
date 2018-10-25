@@ -8,16 +8,18 @@ use App\Models\EstateArticle;
 
 class EstatesController extends Controller
 {
+    // 返回楼盘列表
     public function index()
     {
         try {
-            $estates = Estate::get();
+            $estates = Estate::orderBy('rank', 'desc')->paginate(5);
             return $this->resData('返回全部数据', 1, $estates);
         } catch (\Exception $e) {
             return $this->resData($e, 0);
         }
     }
 
+    // 返回楼盘详情
     public function show(Request $request)
     {
         try {

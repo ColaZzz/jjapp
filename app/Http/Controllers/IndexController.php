@@ -13,16 +13,16 @@ class IndexController extends Controller
     {
         $list = \DB::select('select * 
         from(
-            select id,subtitle,flag,img_url,updated_at,indexpage 
+            select id,subtitle,flag,img_url,updated_at,indexpage,rank 
             from business_article 
             union 
-            select id,subtitle,flag,img_url,updated_at,indexpage 
+            select id,subtitle,flag,img_url,updated_at,indexpage,rank 
             from estate_article
             ) as a 
             where indexpage=1
-            order by updated_at 
+            order by rank 
             desc 
-            limit 4');
+            limit 5');
 
         return $this->resData('返回轮播图数据', 1, $list);
     }

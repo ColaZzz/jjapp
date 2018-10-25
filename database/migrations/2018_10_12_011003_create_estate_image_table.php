@@ -16,7 +16,7 @@ class CreateEstateImageTable extends Migration
         Schema::create('estate_image', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('estate_id')->comment('外键');
-            $table->text('imgurl')->comment('图片地址');
+            $table->text('img_url')->comment('图片地址');
             $table->integer('rank')->nullable()->comment('排序');
             $table->timestamps();
         });

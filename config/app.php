@@ -228,4 +228,7 @@ return [
 
     ],
 
+    // faker语言
+    'faker_locale' => 'zh_CN',
+
 ];

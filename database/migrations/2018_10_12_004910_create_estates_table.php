@@ -19,11 +19,11 @@ class CreateEstatesTable extends Migration
             $table->string('area')->comment('所属地区');
             $table->string('address')->comment('地址');
             $table->string('state')->comment('售卖状态');
-            $table->string('price')->comment('价格');
+            $table->integer('price')->comment('价格');
             $table->text('icon_url')->comment('商标');
             $table->text('img_url')->comment('封面图片');
             $table->integer('flag')->comment('类型标识');
-            $table->dateTime('state_time')->nullable()->comment('开盘时间');
+            $table->date('start_time')->nullable()->comment('开盘时间');
             $table->string('sell_address')->nullable()->comment('售楼地址');
             $table->string('property_year')->nullable()->comment('产权年限');
             $table->string('decoration')->nullable()->comment('装修标准');

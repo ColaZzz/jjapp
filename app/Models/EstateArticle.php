@@ -19,10 +19,11 @@ class EstateArticle extends Model
 
     public function showAllRows($id)
     {
-        $allRows = $this->with('estateArticleImages')->where('estate_id', $id)->get();
-        foreach($allRows as $row){
-            $row->estateArticleImages;
-        }
+        $allRows = $this->where('estate_id', $id)->orderBy('rank', 'desc')->paginate(5);
+        // $allRows = $this->with('estateArticleImages')->where('estate_id', $id)->orderBy('rank', 'desc')->paginate(5);
+        // foreach($allRows as $row){
+        //     $row->estateArticleImages;
+        // }
         return $allRows;
     }
 
