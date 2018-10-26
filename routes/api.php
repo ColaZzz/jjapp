@@ -20,13 +20,14 @@ $api->version('v1', [
     $api->get('estate', 'EstatesController@show');
     $api->get('estatearticles', 'EstateArticlesController@index');
     $api->get('estatearticle', 'EstateArticlesController@show');
+    $api->get('estatefilter','EstatesController@filter');
 
     // 首页推荐
     $api->get('indexpage', 'IndexController@index');
     $api->get('indexcolumn', 'IndexController@column');
 
     // 地图
-    $api->get('map', 'IndexController@map');
+    $api->get('map', 'MapController@map');
 
     // 后台
     $api->get('selectionoftitle', 'EstatesController@showSelect');

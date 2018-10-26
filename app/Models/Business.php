@@ -13,7 +13,10 @@ class Business extends Model
         return $this->hasMany('App\Models\BusinessArticle', 'business_id', 'id');
     }
     
-    // 返回商业列表全部的信息
+    /**
+     * 返回商业列表全部的信息
+     * @return array 返回类型
+     */
     public function showAllBusiness()
     {
         $businesses = $this->get();

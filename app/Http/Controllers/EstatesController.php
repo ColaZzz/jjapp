@@ -9,11 +9,14 @@ use App\Models\EstateArticle;
 class EstatesController extends Controller
 {
     // 返回楼盘列表
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $estates = Estate::orderBy('rank', 'desc')->paginate(5);
-            return $this->resData('返回全部数据', 1, $estates);
+            $state = $request->state;
+            $priceRank = $request->priceRank;
+            $estateObj = new Estate();
+            $estates = $estateObj->estateFilter($state, $priceRank);
+            return $this->resData('返回楼盘列表', 1, $estates);
         } catch (\Exception $e) {
             return $this->resData($e, 0);
         }
@@ -23,16 +26,16 @@ class EstatesController extends Controller
     public function show(Request $request)
     {
         try {
+            $estateObj = new Estate();
             $id = $request->id;
-            $estate = Estate::where('id', $id)->with(['estateImages' => function ($query) {
-                $query->orderBy('rank', 'desc');
-            }])->first();
-            return $this->resData('返回id为' . $id . '的数据', '1', $estate);
+            $estate = $estateObj->showEstate($id);
+            return $this->resData('返回id为' . $id . '的数据', 1, $estate);
         } catch (\Exception $e) {
             return $this->resData($e, 0);
         }
     }
 
+    // 后台选项
     public function showSelect()
     {
         $estates = Estate::get();
@@ -45,6 +48,7 @@ class EstatesController extends Controller
         return $rows;
     }
 
+    // 后台选项
     public function showSelectArticle()
     {
         $estateArticles = EstateArticle::get();
@@ -55,5 +59,19 @@ class EstatesController extends Controller
             array_push($rows, $row);
         }
         return $rows;
+    }
+
+    // 楼盘筛选
+    public function filter(Request $request)
+    {
+        try{
+            $state = $request->state;
+            $priceRank = $request->priceRank;
+            $estateObj = new Estate();
+            $estates = $estateObj->estateFilter($state, $priceRank);
+            return $this->resData($state, 1, $estates);
+        }catch(\Exception $e){
+            return $this->resData($e, 0);
+        }
     }
 }

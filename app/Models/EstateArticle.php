@@ -17,16 +17,22 @@ class EstateArticle extends Model
         return $this->belongsTo('App\Models\Estate', 'estate_id', 'id');
     }
 
+    /**
+     * 返回当前楼盘下的户型
+     * @param int $id 传入的estate_id
+     * @return array 返回类型
+     */
     public function showAllRows($id)
     {
         $allRows = $this->where('estate_id', $id)->orderBy('rank', 'desc')->paginate(5);
-        // $allRows = $this->with('estateArticleImages')->where('estate_id', $id)->orderBy('rank', 'desc')->paginate(5);
-        // foreach($allRows as $row){
-        //     $row->estateArticleImages;
-        // }
         return $allRows;
     }
 
+    /**
+     * 返回户型的详细信息
+     * @param int $id 传入的estate_article_id
+     * @return EstateArticle 返回类型
+     */
     public function showRows($id)
     {
         $row = $this->find($id);
