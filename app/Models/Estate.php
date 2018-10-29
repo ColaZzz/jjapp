@@ -50,10 +50,10 @@ class Estate extends Model
      */
     public function estateFilter($state, $priceRank)
     {
-        $rank;
-        $price;
+        $rank; //默认排序
+        $price; //价格排序
 
-        if($state && $priceRank){
+        if($state || $priceRank){
             $rank = null;
         }else{
             $rank = 'desc';
@@ -63,7 +63,7 @@ class Estate extends Model
             $price = 'asc';
         }else if($priceRank == 2){
             $price = 'desc';
-        }else if($priceRank == 0){
+        }else{
             $price = null;
         }
 
