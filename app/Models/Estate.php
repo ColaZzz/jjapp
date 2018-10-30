@@ -58,20 +58,12 @@ class Estate extends Model
         }else{
             $rank = 'desc';
         }
-        
-        if($priceRank == 1){
-            $price = 'asc';
-        }else if($priceRank == 2){
-            $price = 'desc';
-        }else{
-            $price = null;
-        }
 
         return $this->when($state, function ($query) use ($state) {
             return $query->where('state', $state);
         })
-        ->when($price, function ($query) use ($price){
-            return $query->orderBy('price', $price);
+        ->when($priceRank, function ($query) use ($priceRank){
+            return $query->orderBy('price', $priceRank);
         })
         ->when($rank, function ($query) use ($rank) {
             return $query->orderBy('rank', $rank);

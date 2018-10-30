@@ -15,6 +15,10 @@ $api->version('v1', [
     $api->get('businessarticles', 'BusinessArticleController@index');
     $api->get('businessarticle', 'BusinessArticleController@show');
     
+    // JJmall
+    $api->get('articles', 'ArticleController@index');
+    $api->get('article', 'ArticleController@show');
+
     // 住宅
     $api->get('estates', 'EstatesController@index');
     $api->get('estate', 'EstatesController@show');
