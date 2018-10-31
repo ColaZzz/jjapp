@@ -39,4 +39,12 @@ class Article extends Model
     {
         return $this->where('id', $id)->first();
     }
+
+    /**
+     * 获取mall轮播图的数据
+     */
+    public function getSwiper()
+    {
+        return $this->orderBy('created_at', 'desc')->limit(5)->get();
+    }
 }

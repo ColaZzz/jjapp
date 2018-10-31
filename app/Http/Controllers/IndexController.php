@@ -13,14 +13,14 @@ class IndexController extends Controller
     {
         $list = \DB::select('select * 
         from(
-            select id,subtitle,flag,img_url,updated_at,indexpage,rank 
-            from business_article 
+            select id,title,subtitle,flag,created_at,rank,indexpage,img_url 
+            from articles
             union 
-            select id,subtitle,flag,img_url,updated_at,indexpage,rank 
+            select id,title,subtitle,flag,created_at,rank,indexpage,img_url
             from estate_article
             ) as a 
             where indexpage=1
-            order by rank 
+            order by created_at 
             desc 
             limit 5');
 
@@ -33,7 +33,7 @@ class IndexController extends Controller
         $list = \DB::select('select * 
         from(
             select id,title,flag,img_url,rank 
-            from business 
+            from articles 
             union 
             select id,title,flag,img_url,rank 
             from estates

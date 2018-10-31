@@ -18,6 +18,7 @@ $api->version('v1', [
     // JJmall
     $api->get('articles', 'ArticleController@index');
     $api->get('article', 'ArticleController@show');
+    $api->get('mallswiper', 'MallController@index');
 
     // 住宅
     $api->get('estates', 'EstatesController@index');
