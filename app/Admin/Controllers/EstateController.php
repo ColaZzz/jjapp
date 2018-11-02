@@ -91,7 +91,7 @@ class EstateController extends Controller
         // $grid->icon_url('Icon url');
         // $grid->img_url('Img url');
         // $grid->flag('Flag');
-        // $grid->state_time('开盘时间');
+        // $grid->start_time('开盘时间');
         // $grid->sell_address('销售地址');
         // $grid->property_year('产权年限');
         // $grid->decoration('装修');
@@ -124,10 +124,10 @@ class EstateController extends Controller
         $show->address('地址');
         $show->state('状态');
         $show->price('价格');
-        $show->icon_url('商标')->file();
-        $show->img_url('封面')->file();
+        $show->icon_url('商标')->image();
+        $show->img_url('封面')->image();
         $show->flag('Flag');
-        $show->state_time('开盘时间');
+        $show->start_time('开盘时间');
         $show->sell_address('销售地址');
         $show->property_year('产权年限');
         $show->decoration('装修');
@@ -161,7 +161,7 @@ class EstateController extends Controller
         $form->image('icon_url', '* 商标')->uniqueName();
         $form->image('img_url', '* 封面')->uniqueName();
         $form->select('flag', '* 类型')->options([1 => '住宅']);
-        $form->datetime('state_time', '开盘时间')->default(date('Y-m-d H:i:s'));
+        $form->datetime('start_time', '开盘时间')->default(date('Y-m-d'));
         $form->text('sell_address', '销售地址');
         $form->text('property_year', '产权年限');
         $form->select('decoration', '装修')->options(['毛坯' => '毛坯', '精装' => '精装']);
