@@ -15,4 +15,5 @@ Route::group([
     $router->resource('estateimages', EstateImageController::class);
     $router->resource('estatearticles', EstateArticleController::class);
     $router->resource('estatearticleimages', EstateArticleImageController::class);
+    $router->resource('articles', ArticleController::class);
 });

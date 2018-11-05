@@ -2,8 +2,7 @@
 
 namespace App\Admin\Controllers;
 
-use App\Models\EstateArticleImage;
-use App\Models\EstateArticle;
+use App\Models\Article;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Form;
@@ -11,7 +10,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
-class EstateArticleImageController extends Controller
+class ArticleController extends Controller
 {
     use HasResourceActions;
 
@@ -80,40 +79,20 @@ class EstateArticleImageController extends Controller
      */
     protected function grid()
     {
-        $grid = new Grid(new EstateArticleImage);
+        $grid = new Grid(new Article);
 
-        //默认弹出筛选
-        $grid->expandFilter();
-        
-        $grid->filter(function($filter){
-
-            // 去掉默认的id过滤器
-            $filter->disableIdFilter();
-        
-            // 在这里添加字段过滤器
-            $filter->where(function ($query) {
-
-                $query->whereHas('estateArticle', function ($query) {
-                    $query->where('id', "{$this->input}");
-                });
-            
-            }, '户型ID');
-        });
-
-        // 列操作按钮 查看、编辑、删除
-        $grid->actions(function ($actions) {
-            // $actions->disableDelete();
-            // $actions->disableEdit();
-            $actions->disableView();
-        });
-
-        // $grid->id('Id');
-        $grid->estate_article_id('户型ID')->label('danger');
-        $grid->estateArticle()->title('户型')->label('primary');
-        $grid->img_url('图片')->image();
-        $grid->rank('排序（数字越大表示越靠前）');
-        $grid->created_at('创建时间');
-        $grid->updated_at('最后更新');
+        $grid->id('Id');
+        $grid->title('Title');
+        $grid->img_url('Img url');
+        $grid->subtitle('Subtitle');
+        $grid->state('State');
+        // $grid->information('Information');
+        $grid->rank('Rank');
+        $grid->flag('Flag');
+        $grid->type('Type');
+        $grid->indexpage('Indexpage');
+        $grid->created_at('Created at');
+        $grid->updated_at('Updated at');
 
         return $grid;
     }
@@ -126,14 +105,20 @@ class EstateArticleImageController extends Controller
      */
     protected function detail($id)
     {
-        $show = new Show(EstateArticleImage::findOrFail($id));
+        $show = new Show(Article::findOrFail($id));
 
         $show->id('Id');
-        $show->estate_article_id('户型ID');
-        $show->img_url('图片')->image();
-        $show->rank('排序');
-        $show->created_at('创建时间');
-        $show->updated_at('最后更新');
+        $show->title('Title');
+        $show->img_url('Img url');
+        $show->subtitle('Subtitle');
+        $show->state('State');
+        $show->information('Information');
+        $show->rank('Rank');
+        $show->flag('Flag');
+        $show->type('Type');
+        $show->indexpage('Indexpage');
+        $show->created_at('Created at');
+        $show->updated_at('Updated at');
 
         return $show;
     }
@@ -145,11 +130,17 @@ class EstateArticleImageController extends Controller
      */
     protected function form()
     {
-        $form = new Form(new EstateArticleImage);
+        $form = new Form(new Article);
 
-        $form->number('estate_article_id', '户型ID');
-        $form->image('img_url', '图片')->uniqueName();
-        $form->number('rank', '排序');
+        $form->text('title', 'Title');
+        $form->textarea('img_url', 'Img url');
+        $form->text('subtitle', 'Subtitle');
+        $form->text('state', 'State');
+        $form->editor('information', 'Information');
+        $form->number('rank', 'Rank');
+        $form->number('flag', 'Flag');
+        $form->number('type', 'Type');
+        $form->number('indexpage', 'Indexpage');
 
         return $form;
     }
