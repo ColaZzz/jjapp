@@ -10,10 +10,6 @@ $api->version('v1', [
     'limit' => config('api.rate_limits.access.limit'),
     'expires' => config('api.rate_limits.access.expires'),
 ], function ($api) {
-    // 商业
-    $api->get('business', 'BusinessController@index');
-    $api->get('businessarticles', 'BusinessArticleController@index');
-    $api->get('businessarticle', 'BusinessArticleController@show');
     
     // JJmall
     $api->get('articles', 'ArticleController@index');
@@ -26,6 +22,11 @@ $api->version('v1', [
     $api->get('estatearticles', 'EstateArticlesController@index');
     $api->get('estatearticle', 'EstateArticlesController@show');
     $api->get('estatefilter','EstatesController@filter');
+
+    // 随机推荐文章
+    $api->get('randomarticles', 'ArticleController@randomArticles');
+    $api->get('randomestates', 'EstatesController@randomEstate');
+    $api->get('randomestatearticles', 'EstateArticlesController@randomEstateArticles');
 
     // 首页推荐
     $api->get('indexpage', 'IndexController@index');

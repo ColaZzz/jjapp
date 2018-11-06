@@ -40,4 +40,13 @@ class EstateArticle extends Model
         $row->estate;
         return $row;
     }
+
+    /**
+     * 随机推荐户型文章
+     * @param int $rows 获取随机的行数
+     */
+    public function randomEstateArticles($rows)
+    {
+        return $this->with('estate')->inRandomOrder()->limit($rows)->get();
+    }
 }

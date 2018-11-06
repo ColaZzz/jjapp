@@ -30,4 +30,16 @@ class EstateArticlesController extends Controller
             return $this->resData($e, 0);
         }
     }
+
+    public function randomEstateArticles(Request $request)
+    {
+        try {
+            $rows = $request->rows;
+            $obj = new EstateArticle();
+            $estateArticles = $obj->randomEstateArticles($rows);
+            return $this->resData('返回全部数据', 1, $estateArticles);
+        } catch (\Exception $e) {
+            return $this->resData($e, 0);
+        }
+    }
 }

@@ -70,4 +70,13 @@ class Estate extends Model
         })
         ->paginate(5);
     }
+
+    /**
+     * 随机推荐楼盘文章
+     * @param int $rows 获取随机的行数
+     */
+    public function randomEstate($rows)
+    {
+        return $this->where('state', '!=', '售完')->inRandomOrder()->limit($rows)->get();
+    }
 }

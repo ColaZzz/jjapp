@@ -32,4 +32,16 @@ class ArticleController extends Controller
             return $this->resData('返回失败', 0, $e);
         }
     }
+
+    public function randomArticles(Request $request)
+    {
+        try {
+            $rows = $request->rows;
+            $art = new Article();
+            $articles = $art->randomArticles($rows);
+            return $this->resData('返回成功', 1, $articles);
+        } catch (\Exception $e) {
+            return $this->resData('返回失败', 0, $e);
+        }
+    }
 }

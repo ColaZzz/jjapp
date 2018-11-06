@@ -74,4 +74,17 @@ class EstatesController extends Controller
             return $this->resData($e, 0);
         }
     }
+
+    // 楼盘随机推荐
+    public function randomEstate(Request $request)
+    {
+        try {
+            $rows = $request->rows;
+            $e = new Estate();
+            $estates = $e->randomEstate($rows);
+            return $this->resData('返回成功', 1, $estates);
+        } catch (\Exception $e) {
+            return $this->resData('返回失败', 0, $e);
+        }
+    }
 }

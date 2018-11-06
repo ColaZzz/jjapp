@@ -13,19 +13,22 @@ class Article extends Model
     public function getArticleForType($type, $time, $rank)
     {
         $primary;
-        if($time || $rank){
+        if ($time || $rank) {
             $primary = false;
-        }else{
+        } else {
             $primary = 'desc';
         }
-        return $this->where('type', $type)
-        ->when($primary, function($query) use ($primary){
+        return $this
+        ->when($type, function ($query) use ($type) {
+            return $query->where('type', $type);
+        })
+        ->when($primary, function ($query) use ($primary) {
             return $query->orderBy('created_at', 'desc');
         })
-        ->when($time, function($query) use ($time){
+        ->when($time, function ($query) use ($time) {
             return $query->orderBy('created_at', $time);
         })
-        ->when($rank, function($query) use ($rank){
+        ->when($rank, function ($query) use ($rank) {
             return $query->orderBy('rank', $rank);
         })
         ->paginate(5);
@@ -46,5 +49,14 @@ class Article extends Model
     public function getSwiper()
     {
         return $this->orderBy('created_at', 'desc')->limit(5)->get();
+    }
+
+    /**
+     * 随机推荐文章
+     * @param int $rows 获取随机的行数
+     */
+    public function randomArticles($rows)
+    {
+        return $this->where('state', '!=', '已结束')->inRandomOrder()->limit($rows)->get();
     }
 }

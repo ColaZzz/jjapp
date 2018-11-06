@@ -14,7 +14,7 @@ $factory->define(App\Models\EstateArticle::class, function (Faker $faker) {
         'direction' => $faker->randomElement($array = array('东南','南北','西南','西北','东北')),
         'rank' => $faker->numberBetween($min = 1, $max = 999),
         'flag' => 1,
-        'content' => $faker->text($maxNbChars = 800),
+        'content' => '<p></p><p></p><h1>最新活动</h1><h3>rich-text</h3><p>支持默认事件，包括：<code>tap</code>、<code>touchstart</code>、<code>touchmove</code>、<code>touchcancel</code>、<code>touchend</code>和<code>longtap</code></p><p><strong>nodes 属性推荐使用 Array 类型，由于组件会将 String 类型转换为 Array 类型，因而性能会有所下降</strong></p><h3>nodes</h3><p>现支持两种节点，通过type来区分，分别是元素节点和文本节点，默认是元素节点，在富文本区域里显示的HTML节点</p><p><img src="https://s1.ax1x.com/2018/11/05/iIlFFf.jpg" style="max-width:100%;"><br></p>',
         'indexpage' => $faker->randomElement($array = array(1, 0)),
         'created_at' => $date_time,
         'updated_at' => $date_time,
