@@ -36,6 +36,9 @@ $api->version('v1', [
 
     // 后台
     $api->get('selectionoftitle', 'EstatesController@showSelect');
+
+    // 测试
+    $api->get('test', 'TestController@test');
 });
 
 $api->version('v2', function ($api) {
