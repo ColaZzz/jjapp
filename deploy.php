@@ -7,27 +7,28 @@ require 'recipe/laravel.php';
 set('application', 'my_project');
 
 // Project repository
-set('repository', 'github.com/ColaZzz/jjapp.git');
+set('repository', 'git@github.com:ColaZzz/jjapp.git');
 
 // [Optional] Allocate tty for git clone. Default value is false.
-set('git_tty', true);
+set('git_tty', true); 
 
-// Shared files/dirs between deploys
+// Shared files/dirs between deploys 
 add('shared_files', []);
 add('shared_dirs', []);
 
-// Writable dirs by web server
+// Writable dirs by web server 
 add('writable_dirs', []);
 
 
 // Hosts
 
-host('118.24.110.34')
-    ->user('deployer') // 这里填写 deployer
-    // 并指定公钥的位置
+// 这里填写目标服务器的 IP 或者域名
+host('118.24.110.34') 
+    ->user('deployer') // 这里填写 deployer 
+      // 并指定公钥的位置
     ->identityFile('~/.ssh/deployerkey')
     // 指定项目部署到服务器上的哪个目录
-    ->set('deploy_path', '/data/www/jjapp');
+    ->set('deploy_path', '/data/www/jjapp'); 
     
 // Tasks
 
@@ -40,4 +41,5 @@ after('deploy:failed', 'deploy:unlock');
 
 // Migrate database before symlink new release.
 
-before('deploy:symlink', 'artisan:migrate');
+// before('deploy:symlink', 'artisan:migrate');
+
