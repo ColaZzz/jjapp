@@ -8,6 +8,6 @@ class TestController extends Controller
 {
     public function test()
     {
-        return "hello world!";
+        return "Deployer部署成功！";
     }
 }
