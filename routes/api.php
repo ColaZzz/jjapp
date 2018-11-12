@@ -38,6 +38,9 @@ $api->version('v1', [
     // 后台
     $api->get('selectionoftitle', 'EstatesController@showSelect');
 
+    // 登录
+    $api->post('login', 'UserController@login');
+    
     // 测试
     $api->get('test', 'TestController@test');
 });

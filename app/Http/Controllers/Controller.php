@@ -11,6 +11,12 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    /**
+     * cache过期时间
+     */
+    public $minutes = 110;
+
+
     public function resData($msg, $code, $data = null)
     {
         $result = [
@@ -19,5 +25,14 @@ class Controller extends BaseController
             'data' => $data
         ];
         return $result;
+    }
+
+    /**
+     * 生成唯一的session
+     * @return md5
+     */
+    public function UniqueSession()
+    {
+        return md5(uniqid());
     }
 }
