@@ -40,6 +40,9 @@ $api->version('v1', [
 
     // 登录
     $api->post('login', 'UserController@login');
+
+    // 联动
+    $api->post('sendblocklist', 'BlockController@getInput');
     
     // 测试
     $api->get('test', 'TestController@test');

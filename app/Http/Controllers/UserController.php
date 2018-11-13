@@ -33,14 +33,15 @@ class UserController extends Controller
                 User::insert($arr);
             }
 
-
             // 自定义登陆态并于openid关联
             $session_key_3rd = $this->UniqueSession();
             Cache::put($session_key_3rd, $openid, $this->minutes);
 
             return $this->resData('session_3rd', 1, $session_key_3rd);
         } catch (\Expection $e) {
-            return $this->resData('fail', 0);
+            return $this->resData('fail', 0, $e);
         }
     }
+
+    
 }
