@@ -49,9 +49,29 @@ class BlockController extends Controller
             // 存入linkages表中
             $linkage->where('id', $reocrdId)->update(['qrcode' => $qcodeKey]);
 
-            return $this->resData('提交成功并已生成二维码', 1);
+            return $this->resData('提交成功并已生成二维码', 1, ['qrcode' => $qcodeKey, 'datetime'=>$created_at]);
         } catch (\Expection $e) {
             return $this->resData('fail', 0, $e);
+        }
+    }
+
+    /**
+     * 获取个人的联动记录
+     */
+    public function getPersonLinkages(Request $request)
+    {
+        try {
+            $token = $request->token;
+            $user = new User();
+            $id = $user->getIdForToken($token);
+            if (!$id) {
+                return $this->resData('用户未登录', 1);
+            }
+
+            $linkages = Linkage::where('user_id', $id)->orderBy('created_at', 'desc')->get();
+            return $this->resData('获取记录', 1, $linkages);
+        } catch (\Exception $e) {
+            $this->resData('fail', 0, $e);
         }
     }
 }

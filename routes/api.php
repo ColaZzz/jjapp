@@ -43,6 +43,7 @@ $api->version('v1', [
 
     // 联动
     $api->post('sendblocklist', 'BlockController@getInput');
+    $api->post('personlinkages', 'BlockController@getPersonLinkages');
     
     // 测试
     $api->get('test', 'TestController@test');

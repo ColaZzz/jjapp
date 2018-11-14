@@ -20,5 +20,6 @@ class DatabaseSeeder extends Seeder
         $this->call(BusinessArticleTableSeeder::class);
         $this->call(BusinessArticleImageTableSeeder::class);
         $this->call(ArticleTableSeeder::class);
+        $this->call(LinkageTokenSeeder::class);
     }
 }
