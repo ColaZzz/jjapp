@@ -22,15 +22,17 @@ class UserController extends Controller
             $openid = $result['openid'];
             $session_key = $result['session_key'];
 
-            $arr = Array([
+            $arr = array([
                 'openid' => $openid,
                 'session_key' => $session_key
             ]);
 
             // 将第一次登录的用户的openid存入数据库
             $exist = User::where('openid', $openid)->first();
-            if(!$exist){
+            if (!$exist) {
                 User::insert($arr);
+            } else {
+                $exist->update(['session_key'=>$session_key]);
             }
 
             // 自定义登陆态并于openid关联
@@ -42,6 +44,27 @@ class UserController extends Controller
             return $this->resData('fail', 0, $e);
         }
     }
-
     
+    /**
+     * 确认是否是联动的管理人员
+     */
+    public function checkLinkageRole(Request $request)
+    {
+        try {
+            $token = $request->token;
+            $user = new User();
+            $id = $user->getIdForToken($token);
+            if(!$id){
+                return $this->resData('用户未登录', 2);
+            }
+            $role = $user->find($id);
+            if($role->linkage_role){
+                return $this->resData('确认通过', 1);
+            }else{
+                return $this->resData('当前用户没用权限', 1);
+            }
+        } catch (\Expection $e) {
+            return $this->resData('fail', 0, $e);
+        }
+    }
 }

@@ -44,6 +44,9 @@ $api->version('v1', [
     // 联动
     $api->post('sendblocklist', 'BlockController@getInput');
     $api->post('personlinkages', 'BlockController@getPersonLinkages');
+    $api->post('checkscancode', 'BlockController@checkScanToken');
+    $api->post('checklinkagerole', 'UserController@checkLinkageRole');
+    $api->post('scancodelinkage', 'BlockController@getLinkageInfo');
     
     // 测试
     $api->get('test', 'TestController@test');
