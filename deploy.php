@@ -35,9 +35,6 @@ task('build', function () {
 // [Optional] if deploy fails automatically unlock.
 after('deploy:failed', 'deploy:unlock');
 
-//重启php服务
-after('deploy:symlink', 'php-fpm:restart');
-
 // 填充数据
 after('deploy:symlink', 'artisan:db:seed');
 
