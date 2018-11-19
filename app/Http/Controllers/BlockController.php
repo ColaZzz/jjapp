@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\Models\Linkage;
 use App\Models\LinkageToken;
 use Illuminate\Support\Facades\Cache;
+use Validator;
 
 class BlockController extends Controller
 {
@@ -17,34 +18,39 @@ class BlockController extends Controller
     public function getInput(Request $request)
     {
         try {
-            // 先判断用户是否登录
             $token = $request->token;
+            $linkage = new Linkage();
             $user = new User();
+            // 先判断用户是否登录
             $id = $user->getIdForToken($token);
             // 返回false则说明该用户未登录
             if (!$id) {
-                return $this->resData('用户未登录', 1);
+                return $this->resData('用户未登录', 2);
             }
 
             $str = $request->jsonstr;
-            $form = json_decode($str);
-            $created_at = Carbon::now()->toDateTimeString();
-            
+            $form = json_decode($str, true);
+            // 表单验证
+            $validates = $linkage->linkageValidate($form);
+            if($validates){
+                return $this->resData('验证错误', 3, $validates);
+            }
+                   
             // 构建待存储数据集
+            $created_at = Carbon::now()->toDateTimeString();
             $row = [
                 'user_id' => $id,
-                'platform' => $form->platform,
-                'project' => $form->project,
-                'company' => $form->company,
-                'worker' => $form->worker,
-                'worker_number' => $form->workNumber,
-                'user' => $form->user,
-                'user_number' => $form->userNumber,
+                'platform' => $form['platform'],
+                'project' => $form['project'],
+                'company' => $form['company'],
+                'worker' => $form['worker'],
+                'worker_number' => $form['workNumber'],
+                'user' => $form['user'],
+                'user_number' => $form['userNumber'],
                 'created_at' => $created_at
             ];
 
             // 插入数据并返回id
-            $linkage = new Linkage();
             $reocrdId = $linkage->insertGetId($row);
             // 将此id生成一个密钥返回到用户的二维码中，日后获取刚填入的信息，该二维码和linkages表的记录关联
             $qcodeKey = $linkage->generateKey($reocrdId);
@@ -117,6 +123,7 @@ class BlockController extends Controller
                 $linkage_id = $linkage->getRecordId($code);
                 // 判断是否存在该二维码
                 if ($linkage_id) {
+                    $linkage->where('id', $linkage_id)->update(['state' => 1]);
                     $linkage = $linkage->find($linkage_id);
                     return $this->resData('确认成功', 1, $linkage);
                 } else {

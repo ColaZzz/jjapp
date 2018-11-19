@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddWxToUsersTable extends Migration
+class AddStateLinkagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class AddWxToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('openid')->nullable()->comment('微信id');
-            $table->string('session_key')->nullable();
+        Schema::table('linkages', function (Blueprint $table) {
+            $table->integer('state')->default(0)->comment('二维码是否使用');
         });
     }
 
@@ -26,9 +25,8 @@ class AddWxToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('openid');
-            $table->dropColumn('session_key');
+        Schema::table('linkages', function (Blueprint $table) {
+            $table->dropColumn('state');
         });
     }
 }

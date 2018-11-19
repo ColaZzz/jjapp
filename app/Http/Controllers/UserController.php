@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use EasyWeChat\Factory;
 use Illuminate\Support\Facades\Cache;
 use App\Models\User;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -13,6 +14,8 @@ class UserController extends Controller
     {
         try {
             $code = $request->code;
+            $username = $request->username;
+            $created = Carbon::now()->toDateTimeString();
             // 初始化EasyWeChat实例
             $app = Factory::miniProgram(config('wechat.config'));
             // 根据 jsCode 获取用户 session 信息
@@ -24,7 +27,9 @@ class UserController extends Controller
 
             $arr = array([
                 'openid' => $openid,
-                'session_key' => $session_key
+                'session_key' => $session_key,
+                'name' => $username,
+                'created_at' => $created
             ]);
 
             // 将第一次登录的用户的openid存入数据库
@@ -32,7 +37,7 @@ class UserController extends Controller
             if (!$exist) {
                 User::insert($arr);
             } else {
-                $exist->update(['session_key'=>$session_key]);
+                $exist->update(['session_key'=>$session_key, 'name' => $username]);
             }
 
             // 自定义登陆态并于openid关联
@@ -54,13 +59,13 @@ class UserController extends Controller
             $token = $request->token;
             $user = new User();
             $id = $user->getIdForToken($token);
-            if(!$id){
+            if (!$id) {
                 return $this->resData('用户未登录', 2);
             }
             $role = $user->find($id);
-            if($role->linkage_role){
+            if ($role->linkage_role) {
                 return $this->resData('确认通过', 1);
-            }else{
+            } else {
                 return $this->resData('当前用户没用权限', 1);
             }
         } catch (\Expection $e) {

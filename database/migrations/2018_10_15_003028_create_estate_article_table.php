@@ -15,7 +15,7 @@ class CreateEstateArticleTable extends Migration
     {
         Schema::create('estate_article', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('estate_id')->comment('外键');
+            $table->integer('estate_id')->unsigned()->comment('外键');
             $table->string('title')->comment('标题');
             $table->string('subtitle')->comment('副标题');
             $table->string('total')->comment('总价');

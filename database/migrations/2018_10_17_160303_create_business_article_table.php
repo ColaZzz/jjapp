@@ -15,7 +15,7 @@ class CreateBusinessArticleTable extends Migration
     {
         Schema::create('business_article', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('business_id');
+            $table->integer('business_id')->unsigned();
             $table->string('title')->comment('标题');
             $table->string('subtitle')->comment('副标题');
             $table->text('content')->comment('简介');

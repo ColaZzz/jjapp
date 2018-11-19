@@ -15,7 +15,7 @@ class CreateBusinessArticleImageTable extends Migration
     {
         Schema::create('business_article_image', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('business_article_id')->comment('外键');
+            $table->integer('business_article_id')->unsigned()->comment('外键');
             $table->text('imgurl')->comment('图片地址');
             $table->integer('rank')->comment('排序');
             $table->timestamps();
