@@ -19,6 +19,9 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique()->nullable();
             $table->string('password')->nullable();
             $table->rememberToken();
+            $table->string('openid')->nullable()->comment('微信id');
+            $table->string('session_key')->nullable();
+            $table->integer('linkage_role')->default(0)->comment('地产联动权限');
             $table->timestamps();
         });
     }

@@ -24,6 +24,8 @@ class CreateLinkagesTable extends Migration
             $table->string('worker_number')->nullable()->comment('工作人员联系电话');
             $table->string('username')->nullable()->comment('客户姓名');
             $table->string('user_number')->nullable()->comment('客户联系电话');
+            $table->string('qrcode')->nullable()->comment('二维码key');
+            $table->integer('state')->default(0)->comment('二维码是否使用');
             $table->timestamps();
         });
     }
