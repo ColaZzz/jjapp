@@ -45,7 +45,7 @@ class BlockController extends Controller
                 'company' => $form['company'],
                 'worker' => $form['worker'],
                 'worker_number' => $form['workNumber'],
-                'user' => $form['user'],
+                'username' => $form['username'],
                 'user_number' => $form['userNumber'],
                 'created_at' => $created_at
             ];
@@ -70,13 +70,15 @@ class BlockController extends Controller
     {
         try {
             $token = $request->token;
+            $state = $request->state;
             $user = new User();
-            $id = $user->getIdForToken($token);
-            if (!$id) {
+            $linkages = new Linkage();
+            $user_id = $user->getIdForToken($token);
+            if (!$user_id) {
                 return $this->resData('用户未登录', 1);
             }
 
-            $linkages = Linkage::where('user_id', $id)->orderBy('created_at', 'desc')->get();
+            $linkages = $linkages->getPersonLinkages($user_id, $state);
             return $this->resData('获取记录', 1, $linkages);
         } catch (\Exception $e) {
             return $this->resData('fail', 0, $e);
@@ -129,6 +131,8 @@ class BlockController extends Controller
                 } else {
                     return $this->resData('二维码无效', 3);
                 }
+            }else{
+                return $this->resData('当前用户没权限', 3);
             }
         } catch (\Exception $e) {
             return $this->resData('fail', 0, $e);

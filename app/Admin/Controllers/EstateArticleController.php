@@ -134,7 +134,7 @@ class EstateArticleController extends Controller
         $form->text('house_area', '* 房屋面积');
         $form->text('payment_proprotion', '* 首付比例');
         $form->text('direction', '* 朝向');
-        $form->textarea('content', '简介')->rows(10);
+        $form->editor('content', '简介');
 
         return $form;
     }

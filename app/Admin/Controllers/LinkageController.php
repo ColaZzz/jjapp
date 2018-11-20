@@ -2,7 +2,7 @@
 
 namespace App\Admin\Controllers;
 
-use App\Models\EstateImage;
+use App\Models\Linkage;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Form;
@@ -10,7 +10,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
-class EstateImageController extends Controller
+class LinkageController extends Controller
 {
     use HasResourceActions;
 
@@ -79,33 +79,21 @@ class EstateImageController extends Controller
      */
     protected function grid()
     {
-        $grid = new Grid(new EstateImage);
-
-        //默认弹出筛选
-        $grid->expandFilter();
-        
-        $grid->filter(function($filter){
-
-            // 去掉默认的id过滤器
-            $filter->disableIdFilter();
-        
-            // 在这里添加字段过滤器
-            $filter->where(function ($query) {
-
-                $query->whereHas('estate', function ($query) {
-                    $query->where('title', 'like', "%{$this->input}%");
-                });
-            
-            }, '楼盘名称');
-        });
+        $grid = new Grid(new Linkage);
 
         $grid->id('Id');
-        // $grid->estate_id('Estate id');
-        $grid->estate()->title('名称')->label('primary');
-        $grid->img_url('图片')->image();
-        $grid->rank('排序（数字越大表示越靠前）');
-        $grid->created_at('创建时间');
-        $grid->updated_at('最后更新');
+        $grid->user_id('User id');
+        $grid->platform('Platform');
+        $grid->project('Project');
+        $grid->company('Company');
+        $grid->worker('Worker');
+        $grid->worker_number('Worker number');
+        $grid->username('User Name');
+        $grid->user_number('User number');
+        $grid->created_at('Created at');
+        $grid->updated_at('Updated at');
+        $grid->qrcode('Qrcode');
+        $grid->state('State');
 
         return $grid;
     }
@@ -118,15 +106,21 @@ class EstateImageController extends Controller
      */
     protected function detail($id)
     {
-        $show = new Show(EstateImage::findOrFail($id));
+        $show = new Show(Linkage::findOrFail($id));
 
         $show->id('Id');
-        // $show->estate_id('Estate id');
-        $show->estate()->title('名称');
-        $show->img_url('图片')->image();
-        $show->rank('排序');
-        $show->created_at('创建时间');
-        $show->updated_at('最后更新');
+        $show->user_id('User id');
+        $show->platform('Platform');
+        $show->project('Project');
+        $show->company('Company');
+        $show->worker('Worker');
+        $show->worker_number('Worker number');
+        $show->user('User');
+        $show->user_number('User number');
+        $show->created_at('Created at');
+        $show->updated_at('Updated at');
+        $show->qrcode('Qrcode');
+        $show->state('State');
 
         return $show;
     }
@@ -138,11 +132,18 @@ class EstateImageController extends Controller
      */
     protected function form()
     {
-        $form = new Form(new EstateImage);
+        $form = new Form(new Linkage);
 
-        $form->select('estate_id', 'Estate id')->options('/api/selectionoftitle');
-        $form->image('img_url', '图片')->uniqueName();
-        $form->number('rank', '排序');
+        $form->number('user_id', 'User id');
+        $form->text('platform', 'Platform');
+        $form->text('project', 'Project');
+        $form->text('company', 'Company');
+        $form->text('worker', 'Worker');
+        $form->text('worker_number', 'Worker number');
+        $form->text('user', 'User');
+        $form->text('user_number', 'User number');
+        $form->text('qrcode', 'Qrcode');
+        $form->number('state', 'State');
 
         return $form;
     }

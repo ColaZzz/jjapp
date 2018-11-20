@@ -22,7 +22,7 @@ class CreateLinkagesTable extends Migration
             $table->string('company')->nullable()->comment('公司名称');
             $table->string('worker')->nullable()->comment('工作人员');
             $table->string('worker_number')->nullable()->comment('工作人员联系电话');
-            $table->string('user')->nullable()->comment('客户姓名');
+            $table->string('username')->nullable()->comment('客户姓名');
             $table->string('user_number')->nullable()->comment('客户联系电话');
             $table->timestamps();
         });

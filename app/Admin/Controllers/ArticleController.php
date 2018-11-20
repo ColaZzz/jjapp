@@ -133,7 +133,7 @@ class ArticleController extends Controller
         $form = new Form(new Article);
 
         $form->text('title', 'Title');
-        $form->textarea('img_url', 'Img url');
+        $form->image('img_url', 'Img url')->uniqueName();
         $form->text('subtitle', 'Subtitle');
         $form->text('state', 'State');
         $form->editor('information', 'Information');
