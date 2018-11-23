@@ -22,9 +22,9 @@ add('writable_dirs', []);
 
 // Hosts
 
-host('118.24.110.34')
-    ->user('deployer')
-    ->set('deploy_path', '/data/www/dep-jjapp');
+host('10.200.1.64')
+    ->user('jj')
+    ->set('deploy_path', '/var/www/jj/jjapp');
 
 // Tasks
 

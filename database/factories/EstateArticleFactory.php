@@ -9,7 +9,7 @@ $factory->define(App\Models\EstateArticle::class, function (Faker $faker) {
         'subtitle' => $faker->address(),
         'total' => '约'.$faker->numberBetween($min = 40, $max = 200).'万',
         'house_area' => $faker->numberBetween($min = 40, $max = 180).'m²',
-        'img_url' => $faker->randomElement($array = array ('house01.jpg','house02.jpg','house03.jpg',
+        'img_url' => 'images/'.$faker->randomElement($array = array ('house01.jpg','house02.jpg','house03.jpg',
                     'house04.jpg','house05.jpg','house06.jpg','house07.jpg','house08.jpg','house09.jpg','house10.jpg',
                     'estate01.jpg','estate02.jpg','estate03.jpg','estate04.jpg','estate05.jpg')),
         'payment_proprotion' => '30%',

@@ -5,7 +5,7 @@ use Faker\Generator as Faker;
 $factory->define(App\Models\Article::class, function (Faker $faker) {
     return [
         'title' => $faker->jobTitle(),
-        'img_url' => $faker->randomElement($array = array ('mall01.jpg','mall02.jpg','mall03.jpg',
+        'img_url' => 'images/'.$faker->randomElement($array = array ('mall01.jpg','mall02.jpg','mall03.jpg',
                     'mall04.jpg','mall05.jpg','mall06.jpg','mall07.jpg','mall08.jpg','mall09.jpg')),
         'subtitle' => $faker->realText($maxNbChars = 60, $indexSize = 2),
         'state' => $faker->randomElement($array = array('正在进行', '已结束', '尚未开始')),

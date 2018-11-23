@@ -109,7 +109,7 @@ class ArticleController extends Controller
 
         $show->id('Id');
         $show->title('Title');
-        $show->img_url('Img url');
+        $show->img_url('Img url')->image();
         $show->subtitle('Subtitle');
         $show->state('State');
         $show->information('Information');
