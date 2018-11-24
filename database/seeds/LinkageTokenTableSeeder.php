@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Models\LinkageToken;
 
-class LinkageTokenSeeder extends Seeder
+class LinkageTokenTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

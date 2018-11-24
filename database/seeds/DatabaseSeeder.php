@@ -17,6 +17,11 @@ class DatabaseSeeder extends Seeder
         $this->call(EstateArticleTableSeeder::class);
         $this->call(EstateArticleImagesTableSeeder::class);
         $this->call(ArticleTableSeeder::class);
-        $this->call(LinkageTokenSeeder::class);
+        $this->call(LinkageTokenTableSeeder::class);
+
+        // mall
+        $this->call(ShopBusinessTableSeeder::class);
+        $this->call(ShopFloorTableSeeder::class);
+        $this->call(ShopTableSeeder::class);
     }
 }
