@@ -15,13 +15,18 @@ $api->version('v1', [
     $api->get('articles', 'ArticleController@index');
     $api->get('article', 'ArticleController@show');
     $api->get('mallswiper', 'MallController@index');
+    $api->get('mallshops', 'ShopsController@index');
+    $api->get('mallswiperes', 'ShopsController@swiperes');
+    $api->get('malltopshopes', 'ShopsController@topshop');
+    $api->get('mallbusinesses', 'ShopsController@business');
+    $api->get('mallfloor', 'ShopsController@floor');
 
     // 住宅
     $api->get('estates', 'EstatesController@index');
     $api->get('estate', 'EstatesController@show');
     $api->get('estatearticles', 'EstateArticlesController@index');
     $api->get('estatearticle', 'EstateArticlesController@show');
-    $api->get('estatefilter','EstatesController@filter');
+    $api->get('estatefilter', 'EstatesController@filter');
 
     // 随机推荐文章
     $api->get('randomarticles', 'ArticleController@randomArticles');
