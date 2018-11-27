@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Shop;
 use App\Models\ShopBusiness;
 use App\Models\ShopFloor;
+use App\Models\Commodity;
 
 class ShopsController extends Controller
 {
@@ -76,6 +77,51 @@ class ShopsController extends Controller
             $shopfloor = new ShopFloor();
             $shopfloores = $shopfloor->getFloor();
             return $this->resData('返回', 1, $shopfloores);
+        }catch(\Expection $e){
+            return $this->resData('bug', 0, $e);
+        }
+    }
+
+    /**
+     * 获取楼层详细信息
+     */
+    public function shop(Request $request)
+    {
+        try{
+            $id = $request->id;
+            $shopObj = new Shop();
+            $shop = $shopObj->getShop($id);
+            return $this->resData('返回', 1, $shop);
+        }catch(\Expection $e){
+            return $this->resData('bug', 0, $e);
+        }
+    }
+
+    /**
+     * 获取商铺下所有的商铺
+     */
+    public function commodities(Request $request)
+    {
+        try{
+            $id = $request->id;
+            $commodity = new Commodity();
+            $commodities = $commodity->getCommodities($id);
+            return $this->resData('返回', 1, $commodities);
+        }catch(\Expection $e){
+            return $this->resData('bug', 0, $e);
+        }
+    }
+
+    /**
+     * 获取商品信息
+     */
+    public function commodity(Request $request)
+    {
+        try{
+            $id = $request->id;
+            $commodityObj = new Commodity();
+            $commodity = $commodityObj->getCommodity($id);
+            return $this->resData('返回', 1, $commodity);
         }catch(\Expection $e){
             return $this->resData('bug', 0, $e);
         }

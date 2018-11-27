@@ -24,7 +24,7 @@ class CreateShopsTable extends Migration
             $table->integer('shop_floor_id')->comment('楼层外键');
             $table->integer('shop_business_id')->comment('业态（分类）外键');
             $table->string('customize_type')->nullable()->comment('自定义二级分类');
-            $table->float('average_spent')->nullable()->comment('人均消费');
+            $table->integer('average_spent')->nullable()->comment('人均消费');
             $table->integer('indexpage')->default(0)->comment('是否显示在首页');
             $table->integer('flag')->default(0)->comment('类型标识：商业-0');
             $table->string('search_word')->nullable()->comment('搜索关键字');

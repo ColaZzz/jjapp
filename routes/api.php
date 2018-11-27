@@ -20,6 +20,10 @@ $api->version('v1', [
     $api->get('malltopshopes', 'ShopsController@topshop');
     $api->get('mallbusinesses', 'ShopsController@business');
     $api->get('mallfloor', 'ShopsController@floor');
+    $api->get('mallshop', 'ShopsController@shop');
+    $api->get('mallcommodities', 'ShopsController@commodities');
+    $api->get('mallcommodity', 'ShopsController@commodity');
+
 
     // 住宅
     $api->get('estates', 'EstatesController@index');

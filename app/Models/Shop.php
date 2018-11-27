@@ -62,4 +62,16 @@ class Shop extends Model
         ->orderBy('rank', 'desc')
         ->get();
     }
+
+    /**
+     * 获取店铺详细信息
+     */
+    public function getShop($id)
+    {
+        return $this
+        ->with('business')
+        ->with('floor')
+        ->where('id', $id)
+        ->first();
+    }
 }
