@@ -24,7 +24,7 @@ add('writable_dirs', []);
 
 host('10.200.1.64')
     ->user('jj')
-    ->set('deploy_path', '/var/www/jj/jjapp');
+    ->set('deploy_path', '/var/www/jj');
 
 // Tasks
 
@@ -37,3 +37,25 @@ after('deploy:failed', 'deploy:unlock');
 
 // Migrate database before symlink new release.
 before('deploy:symlink', 'artisan:migrate');
+
+/**
+ * Main task
+ */
+desc('Deploy your project');
+task('deploy', [
+    'deploy:info',
+    'deploy:prepare',
+    'deploy:lock',
+    'deploy:release',
+    'deploy:update_code',
+    'deploy:shared',
+    'deploy:vendors',
+    'deploy:writable',
+    'artisan:storage:link',
+    'artisan:view:clear',
+    // 'artisan:config:cache',
+    'artisan:optimize',
+    'deploy:symlink',
+    'deploy:unlock',
+    'cleanup',
+]);
