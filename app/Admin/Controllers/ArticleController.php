@@ -82,17 +82,17 @@ class ArticleController extends Controller
         $grid = new Grid(new Article);
 
         $grid->id('Id');
-        $grid->title('Title');
-        $grid->img_url('Img url');
-        $grid->subtitle('Subtitle');
-        $grid->state('State');
-        // $grid->information('Information');
-        $grid->rank('Rank');
-        $grid->flag('Flag');
-        $grid->type('Type');
-        $grid->indexpage('Indexpage');
-        $grid->created_at('Created at');
-        $grid->updated_at('Updated at');
+        $grid->title('标题');
+        $grid->img_url('封面');
+        $grid->subtitle('副标题');
+        $grid->state('状态');
+        // $grid->information('内容');
+        $grid->rank('排序');
+        // $grid->flag('Flag');
+        // $grid->type('类型');
+        $grid->indexpage('是否首页');
+        $grid->created_at('创建时间');
+        $grid->updated_at('最后更新');
 
         return $grid;
     }
@@ -108,17 +108,17 @@ class ArticleController extends Controller
         $show = new Show(Article::findOrFail($id));
 
         $show->id('Id');
-        $show->title('Title');
-        $show->img_url('Img url')->image();
-        $show->subtitle('Subtitle');
-        $show->state('State');
-        $show->information('Information');
-        $show->rank('Rank');
-        $show->flag('Flag');
-        $show->type('Type');
-        $show->indexpage('Indexpage');
-        $show->created_at('Created at');
-        $show->updated_at('Updated at');
+        $show->title('标题');
+        $show->img_url('封面')->image();
+        $show->subtitle('副标题');
+        $show->state('状态');
+        $show->information('内容');
+        $show->rank('排序');
+        // $show->flag('Flag');
+        // $show->type('类型');
+        $show->indexpage('是否首页');
+        $show->created_at('创建时间');
+        $show->updated_at('最后更新');
 
         return $show;
     }
@@ -132,15 +132,15 @@ class ArticleController extends Controller
     {
         $form = new Form(new Article);
 
-        $form->text('title', 'Title');
-        $form->image('img_url', 'Img url')->uniqueName();
-        $form->text('subtitle', 'Subtitle');
-        $form->text('state', 'State');
-        $form->editor('information', 'Information');
-        $form->number('rank', 'Rank');
-        $form->number('flag', 'Flag');
-        $form->number('type', 'Type');
-        $form->number('indexpage', 'Indexpage');
+        $form->text('title', '标题');
+        $form->image('img_url', '封面')->uniqueName();
+        $form->text('subtitle', '副标题');
+        $form->select('state', '状态')->options(['正在进行' => '正在进行', '尚未开始' => '尚未开始', '已结束' => '已结束']);
+        $form->editor('information', '内容');
+        $form->number('rank', '排序');
+        // $form->number('flag', 'Flag');
+        // $form->radio('type', '类型')->options([1 => '活动资讯', 2 => '商家资讯',]);
+        $form->radio('indexpage', '是否首页')->options([0 => '不显示在首页', 1 => '显示在首页',]);
 
         return $form;
     }

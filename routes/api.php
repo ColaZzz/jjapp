@@ -46,6 +46,8 @@ $api->version('v1', [
 
     // 后台
     $api->get('selectionoftitle', 'EstatesController@showSelect');
+    $api->get('selectionofshopfloor', 'ShopsController@showSelectFloor');
+    $api->get('selectionofshopbusiness', 'ShopsController@showSelectBusiness');
 
     // 登录
     $api->post('login', 'UserController@login');

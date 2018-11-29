@@ -42,4 +42,16 @@ class EstateArticlesController extends Controller
             return $this->resData($e, 0);
         }
     }
+
+    /**
+     * 户型图片所属户型
+     */
+    public function selectionofestatearticles()
+    {
+        try {
+            $obj = new EstateArticle();
+        } catch (\Exception $e) {
+            return $this->resData($e, 0);
+        }
+    }
 }

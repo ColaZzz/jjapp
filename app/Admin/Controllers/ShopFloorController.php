@@ -2,7 +2,7 @@
 
 namespace App\Admin\Controllers;
 
-use App\Models\EstateImage;
+use App\Models\ShopFloor;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Form;
@@ -10,7 +10,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
-class EstateImageController extends Controller
+class ShopFloorController extends Controller
 {
     use HasResourceActions;
 
@@ -79,31 +79,12 @@ class EstateImageController extends Controller
      */
     protected function grid()
     {
-        $grid = new Grid(new EstateImage);
-
-        //默认弹出筛选
-        $grid->expandFilter();
-        
-        $grid->filter(function($filter){
-
-            // 去掉默认的id过滤器
-            $filter->disableIdFilter();
-        
-            // 在这里添加字段过滤器
-            $filter->where(function ($query) {
-
-                $query->whereHas('estate', function ($query) {
-                    $query->where('title', 'like', "%{$this->input}%");
-                });
-            
-            }, '楼盘名称');
-        });
+        $grid = new Grid(new ShopFloor);
 
         $grid->id('Id');
-        // $grid->estate_id('所属楼盘');
-        $grid->estate()->title('名称')->label('primary');
-        $grid->img_url('图片')->image();
-        $grid->rank('排序（数字越大表示越靠前）');
+        $grid->floor_name('楼层名');
+        $grid->rank('排序');
+        $grid->floor_img_url('楼层落位图');
         $grid->created_at('创建时间');
         $grid->updated_at('最后更新');
 
@@ -118,13 +99,12 @@ class EstateImageController extends Controller
      */
     protected function detail($id)
     {
-        $show = new Show(EstateImage::findOrFail($id));
+        $show = new Show(ShopFloor::findOrFail($id));
 
         $show->id('Id');
-        // $show->estate_id('所属楼盘');
-        $show->estate()->title('名称');
-        $show->img_url('图片')->image();
+        $show->floor_name('楼层名');
         $show->rank('排序');
+        $show->floor_img_url('楼层落位图');
         $show->created_at('创建时间');
         $show->updated_at('最后更新');
 
@@ -138,11 +118,11 @@ class EstateImageController extends Controller
      */
     protected function form()
     {
-        $form = new Form(new EstateImage);
+        $form = new Form(new ShopFloor);
 
-        $form->select('estate_id', '所属楼盘')->options('/api/selectionoftitle');
-        $form->image('img_url', '图片')->uniqueName();
+        $form->text('floor_name', '楼层名');
         $form->number('rank', '排序');
+        $form->image('floor_img_url', '楼层落位图')->uniqueName();
 
         return $form;
     }
