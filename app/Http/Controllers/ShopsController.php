@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use App\Models\Shop;
 use App\Models\ShopBusiness;
 use App\Models\ShopFloor;
 use App\Models\Commodity;
+use App\Models\Investment;
 
 class ShopsController extends Controller
 {
@@ -165,5 +167,46 @@ class ShopsController extends Controller
         } catch (\Expection $e) {
             return $this->resData('bug', 0, $e);
         }
+    }
+
+    /**
+     * 品牌招商页面
+     */
+    public function investmentView()
+    {
+        return view('mall.investment');
+    }
+
+    /**
+     * 品牌招商数据存储
+     */
+    public function investmentStore(Request $request)
+    {
+        $this->validate($request, [
+            'username' => 'required',
+            'sex' => 'required',
+            'number' => 'required',
+            'business' => 'required',
+            'brand' => 'required',
+            'area' => 'required',
+            'file' => 'required'
+        ], [
+            'username.required' => '姓名为空',
+            'sex.required' => '性别没有选择',
+            'number.required' => '联系方式为空',
+            'business.required' => '经营业态为空',
+            'brand.required' => '品牌名称为空',
+            'area.required' => '铺位面积为空',
+            'file.required' => '没有上传PPT',
+        ]);
+        $investment = new Investment();
+
+        $inves = $request->only(['username', 'sex', 'number', 'business', 'brand', 'area']);
+        $path = $request->file->store('files', 'public');
+        $file = ['file' => $path];
+        $ins = array_merge($inves, $file);
+        $investment->insert($ins);
+
+        return '<h1>提交成功</h1>';
     }
 }

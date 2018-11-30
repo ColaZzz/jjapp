@@ -14,3 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/investment', 'ShopsController@investmentView');
+
+Route::post('/investmentstore', 'ShopsController@investmentStore')->name('inves');

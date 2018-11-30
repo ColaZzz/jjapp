@@ -8,6 +8,6 @@ class TestController extends Controller
 {
     public function test()
     {
-        return "Deployer部署成功了！08点34分";
+        return view('mall/investment');
     }
 }

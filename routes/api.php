@@ -61,6 +61,10 @@ $api->version('v1', [
     
     // 测试
     $api->get('test', 'TestController@test');
+
+    // 其他
+    $api->post('zhaoshang', 'TestController@test');
+
 });
 
 $api->version('v2', function ($api) {
