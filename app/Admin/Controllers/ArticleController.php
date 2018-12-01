@@ -113,7 +113,7 @@ class ArticleController extends Controller
         $show->subtitle('副标题');
         $show->state('状态');
         $show->information('内容');
-        $show->rank('排序');
+        $show->rank('排序')->sortable();
         // $show->flag('Flag');
         // $show->type('类型');
         $show->indexpage('是否首页');

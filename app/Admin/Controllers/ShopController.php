@@ -83,19 +83,12 @@ class ShopController extends Controller
 
         $grid->id('Id');
         $grid->title('商铺名');
-        // $grid->subtitle('副标题');
+        $grid->icon_url('商标')->image();
         $grid->img_url('封面')->image();
         $grid->address('地址');
-        // $grid->introduction('内容');
-        // $grid->type_top('是否置顶');
-        // $grid->shop_floor_id('楼层');
-        // $grid->shop_business_id('分类');
         $grid->customize_type('自定义子分类');
         $grid->average_spent('人均消费');
-        // $grid->indexpage('是否首页');
-        // $grid->flag('Flag');
-        // $grid->search_word('搜索关键字');
-        // $grid->rank('排序');
+        $grid->rank('排序')->sortable();
         $grid->created_at('Created at');
         $grid->updated_at('Updated at');
 
@@ -115,6 +108,7 @@ class ShopController extends Controller
         $show->id('Id');
         $show->title('商铺名');
         $show->subtitle('副标题');
+        $show->icon_url('商标')->image();
         $show->img_url('封面')->image();
         $show->address('地址');
         $show->introduction('内容')->editor();
@@ -144,6 +138,7 @@ class ShopController extends Controller
 
         $form->text('title', '*商铺名');
         $form->text('subtitle', '副标题');
+        $form->image('icon_url', '商标')->uniqueName();
         $form->image('img_url', '封面')->uniqueName();
         $form->text('address', '地址');
         $form->editor('introduction', '内容');
