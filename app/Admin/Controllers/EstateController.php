@@ -88,20 +88,6 @@ class EstateController extends Controller
         $grid->address('地址');
         $grid->state('状态');
         $grid->price('价格');
-        // $grid->icon_url('Icon url');
-        // $grid->img_url('Img url');
-        // $grid->flag('Flag');
-        // $grid->start_time('开盘时间');
-        // $grid->sell_address('销售地址');
-        // $grid->property_year('产权年限');
-        // $grid->decoration('装修');
-        // $grid->development_company('开发商');
-        // $grid->greening('绿化率');
-        // $grid->place_area('占地面积');
-        // $grid->house_area('住宅面积');
-        // $grid->property_costs('物业费');
-        // $grid->property_company('物业公司');
-        // $grid->telephone('电话');
         $grid->created_at('创建时间');
         $grid->updated_at('最后更新');
 
@@ -129,14 +115,9 @@ class EstateController extends Controller
         $show->flag('Flag');
         $show->start_time('开盘时间');
         $show->sell_address('销售地址');
-        $show->property_year('产权年限');
         $show->decoration('装修');
-        $show->development_company('开发商');
-        $show->greening('绿化率');
         $show->place_area('占地面积');
         $show->house_area('住宅面积');
-        $show->property_costs('物业费');
-        $show->property_company('物业公司');
         $show->telephone('电话');
         $show->created_at('创建时间');
         $show->updated_at('最后更新');
@@ -163,14 +144,9 @@ class EstateController extends Controller
         $form->select('flag', '* 类型')->options([1 => '住宅']);
         $form->datetime('start_time', '开盘时间')->default(date('Y-m-d'));
         $form->text('sell_address', '销售地址');
-        $form->text('property_year', '产权年限');
         $form->select('decoration', '装修')->options(['毛坯' => '毛坯', '精装' => '精装']);
-        $form->text('development_company', '开发商');
-        $form->text('greening', '绿化率');
         $form->text('place_area', '占地面积');
         $form->text('house_area', '住宅面积');
-        $form->text('property_costs', '物业费');
-        $form->text('property_company', '物业公司');
         $form->text('telephone', '电话');
 
         return $form;
