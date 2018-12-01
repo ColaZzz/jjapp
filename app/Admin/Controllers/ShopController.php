@@ -88,6 +88,7 @@ class ShopController extends Controller
         $grid->address('地址');
         $grid->customize_type('自定义子分类');
         $grid->average_spent('人均消费');
+        $grid->type_top('是否置顶')->sortable();
         $grid->rank('排序')->sortable();
         $grid->created_at('Created at');
         $grid->updated_at('Updated at');
