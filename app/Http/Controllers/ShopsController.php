@@ -9,6 +9,7 @@ use App\Models\ShopBusiness;
 use App\Models\ShopFloor;
 use App\Models\Commodity;
 use App\Models\Investment;
+use Carbon\Carbon;
 
 class ShopsController extends Controller
 {
@@ -204,7 +205,8 @@ class ShopsController extends Controller
         $inves = $request->only(['username', 'sex', 'number', 'business', 'brand', 'area']);
         $path = $request->file->store('files', 'public');
         $file = ['file' => $path];
-        $ins = array_merge($inves, $file);
+        $created_at = ['created_at' => Carbon::now()->toDateTimeString()];
+        $ins = array_merge($inves, $file, $created_at);
         $investment->insert($ins);
 
         return '<h1>提交成功</h1>';

@@ -36,7 +36,7 @@
         </div>
     </div>
     @include('shared._errors')
-    <form action="{{route('inves')}}" method="POST" enctype="multipart/form-data">
+    <form action="/investmentstore" method="POST" enctype="multipart/form-data">
     {{ csrf_field() }}
         <div class="row">
             <div class="col-xs-8 col-xs-offset-2">
