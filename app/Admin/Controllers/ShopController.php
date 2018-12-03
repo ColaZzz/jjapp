@@ -23,7 +23,7 @@ class ShopController extends Controller
     public function index(Content $content)
     {
         return $content
-            ->header('商铺列表')
+            ->header('商铺')
             ->description('')
             ->body($this->grid());
     }

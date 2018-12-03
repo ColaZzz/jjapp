@@ -23,8 +23,8 @@ class ArticleController extends Controller
     public function index(Content $content)
     {
         return $content
-            ->header('Index')
-            ->description('description')
+            ->header('资讯')
+            ->description('')
             ->body($this->grid());
     }
 
@@ -38,8 +38,8 @@ class ArticleController extends Controller
     public function show($id, Content $content)
     {
         return $content
-            ->header('Detail')
-            ->description('description')
+            ->header('详情')
+            ->description('')
             ->body($this->detail($id));
     }
 
@@ -53,8 +53,8 @@ class ArticleController extends Controller
     public function edit($id, Content $content)
     {
         return $content
-            ->header('Edit')
-            ->description('description')
+            ->header('编辑')
+            ->description('')
             ->body($this->form()->edit($id));
     }
 
@@ -67,8 +67,8 @@ class ArticleController extends Controller
     public function create(Content $content)
     {
         return $content
-            ->header('Create')
-            ->description('description')
+            ->header('创建')
+            ->description('带*为必填项')
             ->body($this->form());
     }
 
@@ -83,7 +83,7 @@ class ArticleController extends Controller
 
         $grid->id('Id');
         $grid->title('标题');
-        $grid->img_url('封面');
+        $grid->img_url('封面')->image();
         $grid->subtitle('副标题');
         $grid->state('状态');
         // $grid->information('内容');
@@ -94,6 +94,18 @@ class ArticleController extends Controller
         $grid->created_at('创建时间');
         $grid->updated_at('最后更新');
 
+        $grid->filter(function($filter){
+
+            // 去掉默认的id过滤器
+            $filter->disableIdFilter();
+        
+            // 在这里添加字段过滤器
+            $filter->like('title', '标题');
+        
+        });
+        $grid->actions(function ($actions) {
+            $actions->disableView();
+        });
         return $grid;
     }
 
@@ -132,12 +144,12 @@ class ArticleController extends Controller
     {
         $form = new Form(new Article);
 
-        $form->text('title', '标题');
-        $form->image('img_url', '封面')->uniqueName();
-        $form->text('subtitle', '副标题');
-        $form->select('state', '状态')->options(['正在进行' => '正在进行', '尚未开始' => '尚未开始', '已结束' => '已结束']);
-        $form->editor('information', '内容');
-        $form->number('rank', '排序');
+        $form->text('title', '* 标题');
+        $form->image('img_url', '* 封面')->uniqueName();
+        $form->text('subtitle', '* 副标题');
+        $form->select('state', '* 状态')->options(['正在进行' => '正在进行', '尚未开始' => '尚未开始', '已结束' => '已结束']);
+        $form->editor('information', '* 内容');
+        $form->number('rank', '* 排序');
         // $form->number('flag', 'Flag');
         // $form->radio('type', '类型')->options([1 => '活动资讯', 2 => '商家资讯',]);
         $form->radio('indexpage', '是否首页')->options([0 => '不显示在首页', 1 => '显示在首页',]);

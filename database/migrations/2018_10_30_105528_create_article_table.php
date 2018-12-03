@@ -22,7 +22,7 @@ class CreateArticleTable extends Migration
             $table->text('information')->comment('文章信息');
             $table->integer('rank')->comment('排序');
             $table->integer('flag')->default(0)->comment('类型标识');
-            $table->integer('type')->comment('文章类型');
+            $table->integer('type')->default(0)->comment('文章类型');
             $table->integer('indexpage')->default(0)->comment('是否显示在首页');
             $table->timestamps();
         });

@@ -183,32 +183,43 @@ class ShopsController extends Controller
      */
     public function investmentStore(Request $request)
     {
-        $this->validate($request, [
+        try {
+            $this->validate($request, [
             'username' => 'required',
             'sex' => 'required',
             'number' => 'required',
             'business' => 'required',
             'brand' => 'required',
-            'area' => 'required',
-            'file' => 'required'
+            'area' => 'required'
         ], [
             'username.required' => '姓名为空',
             'sex.required' => '性别没有选择',
             'number.required' => '联系方式为空',
             'business.required' => '经营业态为空',
             'brand.required' => '品牌名称为空',
-            'area.required' => '铺位面积为空',
-            'file.required' => '没有上传PPT',
+            'area.required' => '铺位面积为空'
         ]);
-        $investment = new Investment();
+            $investment = new Investment();
 
-        $inves = $request->only(['username', 'sex', 'number', 'business', 'brand', 'area']);
-        $path = $request->file->store('files', 'public');
-        $file = ['file' => $path];
-        $created_at = ['created_at' => Carbon::now()->toDateTimeString()];
-        $ins = array_merge($inves, $file, $created_at);
-        $investment->insert($ins);
+            $inves = $request->only(['username', 'sex', 'number', 'business', 'brand', 'area']);
 
-        return '<h1>提交成功</h1>';
+            $path;
+            $file = ['file' => ''];
+            // 判断是否存在上传文件
+            if ($request->has('file')) {
+                if ($request->hasFile('file')) {
+                    $path = $request->file->store('files', 'public');
+                    $file = ['file' => $path];
+                }
+            }
+
+            $created_at = ['created_at' => Carbon::now()->toDateTimeString()];
+            $ins = array_merge($inves, $file, $created_at);
+            $investment->insert($ins);
+
+            return view('mall.success_result');
+        } catch (\Exception $e) {
+            return view('mall.fail_result');
+        }
     }
 }

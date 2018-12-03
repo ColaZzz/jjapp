@@ -24,7 +24,7 @@ class EstateController extends Controller
     public function index(Content $content)
     {
         return $content
-            ->header('Index')
+            ->header('楼盘')
             ->description('description')
             ->body($this->grid());
     }
@@ -90,6 +90,15 @@ class EstateController extends Controller
         $grid->price('价格');
         $grid->created_at('创建时间');
         $grid->updated_at('最后更新');
+
+        $grid->filter(function($filter){
+
+            // 去掉默认的id过滤器
+            $filter->disableIdFilter();
+        
+            // 在这里添加字段过滤器
+            $filter->like('title', '名称');      
+        });
 
         return $grid;
     }

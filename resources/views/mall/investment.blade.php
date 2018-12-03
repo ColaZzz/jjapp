@@ -96,7 +96,7 @@
 
         <div class="row">
             <div class="col-xs-8 col-xs-offset-2">
-                <label for="">PPT(不超过8M)</label>
+                <label for="">资料(不超过8M|非必填)</label>
                 <input type="file" name="file" class="form-control"></input>
             </div>
         </div>

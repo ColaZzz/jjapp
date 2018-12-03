@@ -29,4 +29,6 @@ Route::group([
     $router->resource('shopfloors', ShopFloorController::class);
     // 分类
     $router->resource('shopbusinesses', ShopBusinessController::class);
+    // 招商
+    $router->resource('investmentes', InvestmentController::class);
 });

@@ -2,7 +2,7 @@
 
 namespace App\Admin\Controllers;
 
-use App\Models\ShopFloor;
+use App\Models\Investment;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Form;
@@ -10,7 +10,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
-class ShopFloorController extends Controller
+class InvestmentController extends Controller
 {
     use HasResourceActions;
 
@@ -23,8 +23,8 @@ class ShopFloorController extends Controller
     public function index(Content $content)
     {
         return $content
-            ->header('楼层')
-            ->description('description')
+            ->header('品牌招商')
+            ->description('')
             ->body($this->grid());
     }
 
@@ -38,8 +38,8 @@ class ShopFloorController extends Controller
     public function show($id, Content $content)
     {
         return $content
-            ->header('Detail')
-            ->description('description')
+            ->header('详情')
+            ->description('')
             ->body($this->detail($id));
     }
 
@@ -53,8 +53,8 @@ class ShopFloorController extends Controller
     public function edit($id, Content $content)
     {
         return $content
-            ->header('Edit')
-            ->description('description')
+            ->header('编辑')
+            ->description('')
             ->body($this->form()->edit($id));
     }
 
@@ -67,8 +67,8 @@ class ShopFloorController extends Controller
     public function create(Content $content)
     {
         return $content
-            ->header('Create')
-            ->description('description')
+            ->header('创建')
+            ->description('')
             ->body($this->form());
     }
 
@@ -79,14 +79,18 @@ class ShopFloorController extends Controller
      */
     protected function grid()
     {
-        $grid = new Grid(new ShopFloor);
+        $grid = new Grid(new Investment);
 
         $grid->id('Id');
-        $grid->floor_name('楼层名');
-        $grid->rank('排序');
-        $grid->floor_img_url('楼层落位图');
-        $grid->created_at('创建时间');
-        $grid->updated_at('最后更新');
+        $grid->username('姓名');
+        $grid->sex('性别');
+        $grid->number('联系方式');
+        $grid->business('意向业态');
+        $grid->brand('意向品牌');
+        $grid->area('意向面积');
+        $grid->file('PPT');
+        $grid->created_at('提交时间');
+        $grid->updated_at('更新时间');
 
         return $grid;
     }
@@ -99,14 +103,18 @@ class ShopFloorController extends Controller
      */
     protected function detail($id)
     {
-        $show = new Show(ShopFloor::findOrFail($id));
+        $show = new Show(Investment::findOrFail($id));
 
         $show->id('Id');
-        $show->floor_name('楼层名');
-        $show->rank('排序');
-        $show->floor_img_url('楼层落位图');
-        $show->created_at('创建时间');
-        $show->updated_at('最后更新');
+        $show->username('姓名');
+        $show->sex('性别');
+        $show->number('联系方式');
+        $show->business('意向业态');
+        $show->brand('意向品牌');
+        $show->area('意向面积');
+        $show->file('PPT')->file();
+        $show->created_at('提交时间');
+        $show->updated_at('更新时间');
 
         return $show;
     }
@@ -118,11 +126,15 @@ class ShopFloorController extends Controller
      */
     protected function form()
     {
-        $form = new Form(new ShopFloor);
+        $form = new Form(new Investment);
 
-        $form->text('floor_name', '楼层名');
-        $form->number('rank', '排序');
-        $form->image('floor_img_url', '楼层落位图')->uniqueName();
+        $form->text('username', '姓名');
+        $form->text('sex', '性别');
+        $form->text('number', '联系方式');
+        $form->text('business', '意向业态');
+        $form->text('brand', '意向品牌');
+        $form->text('area', '意向面积');
+        $form->textarea('file', 'PPT');
 
         return $form;
     }

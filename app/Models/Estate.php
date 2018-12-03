@@ -16,6 +16,10 @@ class Estate extends Model
         return $this->hasMany('App\Models\EstateImage', 'estate_id', 'id');
     }
 
+    public function estateArticles()
+    {
+        return $this->hasMany('App\Models\EstateArticle', 'estate_id', 'id');
+    }
     // 远程关联 EstateArticleImage
     public function estateArticleImages()
     {
