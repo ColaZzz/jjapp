@@ -31,7 +31,7 @@ class Article extends Model
         ->when($rank, function ($query) use ($rank) {
             return $query->orderBy('rank', $rank);
         })
-        ->paginate(5);
+        ->paginate(8);
     }
 
     /**

@@ -24,7 +24,7 @@ class EstateArticle extends Model
      */
     public function showAllRows($id)
     {
-        $allRows = $this->where('estate_id', $id)->orderBy('rank', 'desc')->paginate(5);
+        $allRows = $this->where('estate_id', $id)->orderBy('rank', 'desc')->paginate(8);
         return $allRows;
     }
 
