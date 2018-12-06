@@ -28,6 +28,17 @@ class Controller extends BaseController
         return $result;
     }
 
+    public function resData2($msg, $code, $data = null, $data2 = null)
+    {
+        $result = [
+            'msg' => $msg,
+            'code' => $code,
+            'data' => $data,
+            'data2' => $data2
+        ];
+        return $result;
+    }
+
     /**
      * 生成唯一的session
      * @return md5

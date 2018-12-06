@@ -58,9 +58,10 @@ $api->version('v1', [
     $api->post('checkscancode', 'BlockController@checkScanToken');
     $api->post('checklinkagerole', 'UserController@checkLinkageRole');
     $api->post('scancodelinkage', 'BlockController@getLinkageInfo');
+    $api->post('roleinfo', 'UserController@getRoleInfo');
     
     // 测试
-    $api->get('test', 'TestController@test');
+    $api->post('test', 'UserController@getRoleInfo');
 
     // 其他
     $api->post('zhaoshang', 'TestController@test');

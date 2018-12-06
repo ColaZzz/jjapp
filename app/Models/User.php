@@ -35,6 +35,12 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Linkage', 'user_id', 'id');
     }
+
+    public function role()
+    {
+        return $this->belongsTo('App\Models\EstateRole', 'linkage_role', 'linkage_role');
+    }
+    
     /**
      * 检查登录情况
      * 通过token获取id
@@ -53,5 +59,14 @@ class User extends Authenticatable
         }
         // 满足以上条件返回user_id
         return $row->id;
+    }
+
+    /**
+     * 获取用户权限信息
+     */
+    public function getEstateRole($id)
+    {
+        $row = $this->with('role')->where('id', $id)->first();
+        return $row->role;
     }
 }

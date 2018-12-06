@@ -32,7 +32,7 @@ class BlockController extends Controller
             $form = json_decode($str, true);
             // 表单验证
             $validates = $linkage->linkageValidate($form);
-            if($validates){
+            if ($validates) {
                 return $this->resData('验证错误', 3, $validates);
             }
                    
@@ -40,9 +40,8 @@ class BlockController extends Controller
             $created_at = Carbon::now()->toDateTimeString();
             $row = [
                 'user_id' => $id,
-                'platform' => $form['platform'],
-                'project' => $form['project'],
                 'company' => $form['company'],
+                'child_company' => $form['childCompany'],
                 'worker' => $form['worker'],
                 'worker_number' => $form['workNumber'],
                 'username' => $form['username'],
@@ -119,6 +118,7 @@ class BlockController extends Controller
             }
             // 再判断用户是否有权限
             $role = $user->find($id);
+            // return $this->resData('用户权限', 1, $role->linkage_role);
             if ($role->linkage_role) {
                 // 认证通过
                 $linkage = new Linkage();
@@ -126,13 +126,20 @@ class BlockController extends Controller
                 // 判断是否存在该二维码
                 if ($linkage_id) {
                     $linkage->where('id', $linkage_id)->update(['state' => 1]);
-                    $linkage = $linkage->find($linkage_id);
-                    return $this->resData('确认成功', 1, $linkage);
+                    $linkageForm = $linkage->find($linkage_id);
+                    // 电商驻场只返回报备数据，不返回台账数据
+                    if ($role->linkage_role == 1) {
+                        return $this->resData('确认成功', 1, $linkageForm);
+                    } elseif ($role->linkage_role > 1) {
+                        // 判断是否首次上门
+                        $first = $linkage->firstVisit($linkage_id);
+                        return $this->resData2('确认信息', 5, $linkageForm, $first);
+                    }
                 } else {
                     return $this->resData('二维码无效', 3);
                 }
-            }else{
-                return $this->resData('当前用户没权限', 3);
+            } else {
+                return $this->resData('当前用户没权限', 4);
             }
         } catch (\Exception $e) {
             return $this->resData('fail', 0, $e);

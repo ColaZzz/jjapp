@@ -72,4 +72,24 @@ class UserController extends Controller
             return $this->resData('fail', 0, $e);
         }
     }
+
+    /**
+     * 获取用户的权限信息
+     */
+    public function getRoleInfo(Request $request)
+    {
+        try{
+            $token = $request->token;
+            // return $this->resData('返回数据', 1, $token);
+            $user = new User();
+            $id = $user->getIdForToken($token);
+            if (!$id) {
+                return $this->resData('用户未登录', 2);
+            }
+            $role = $user->getEstateRole($id);
+            return $this->resData('返回数据', 1, $role);
+        }catch(\Exception $e){
+            return $this->resData('fail', 0, $e);
+        }
+    }
 }

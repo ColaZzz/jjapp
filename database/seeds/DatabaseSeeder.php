@@ -25,5 +25,8 @@ class DatabaseSeeder extends Seeder
         $this->call(ShopTableSeeder::class);
         $this->call(CommodityTableSeeder::class);
         $this->call(CommodityImageTableSeeder::class);
+
+        // 电商推荐
+        $this->call(LinkageRoleSeeder::class);
     }
 }

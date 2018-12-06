@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Validator;
+use Carbon\Carbon;
 
 class Linkage extends Model
 {
@@ -39,20 +40,17 @@ class Linkage extends Model
     {
         // 表单验证
         $validator = Validator::make($form, [
-            'platform' => 'bail|required|max:25',
-            'project' => 'bail|required|max:25',
             'company' => 'bail|required|max:25',
+            'childCompany' => 'bail|required|max:25',
             'worker' => 'bail|required|max:10',
             'workNumber' => 'bail|required|size:11',
             'username' => 'bail|required|max:10',
             'userNumber' => 'bail|required|size:11',
         ], [
-            'platform.required' => '电商平台不能为空',
-            'platform.max' => '电商平台太长了',
-            'project.required' => '项目名称不能为空',
-            'project.max' => '项目名称太长了',
             'company.required' => '公司名称不能为空',
             'company.max' => '公司名称太长',
+            'childCompany.required' => '分店名称不能为空',
+            'childCompany.max' => '分店名称太长',
             'worker.required' => '工作人员不能为空',
             'worker.max' => '工作人员太长',
             'workNumber.required' => '工作人员电话不能为空',
@@ -87,5 +85,32 @@ class Linkage extends Model
                     ->orderBy('created_at', 'desc')
                     ->paginate(10);
         }
+    }
+
+    /**
+     * 判断用户是否首次上门
+     * 如果找到对应的数据则返回数据
+     */
+    public function firstVisit($id)
+    {
+        $linkage = $this->find($id);
+        $username = $linkage->username;
+        $firstName = substr($username, 0, 1);
+        $userNumber = $linkage->user_number;
+        $firstNumber = substr($userNumber, 0, 3);
+        $lastNumber = substr($userNumber, -4);
+
+        $userAccount = new UserAccount();
+        $result = $userAccount->where([
+            ['user_number', 'like', $firstNumber.'%'.$lastNumber],
+            ['username', 'like', $firstName.'%']
+        ])->get();
+        // 是否存在用户数据
+        return $result;
+    }
+
+    public function insAccount($name, $number)
+    {
+        
     }
 }
