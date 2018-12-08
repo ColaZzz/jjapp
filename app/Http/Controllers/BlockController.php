@@ -9,6 +9,9 @@ use App\Models\Linkage;
 use App\Models\LinkageToken;
 use Illuminate\Support\Facades\Cache;
 use Validator;
+use App\Models\UserAccount;
+use App\Models\EstateRole;
+use App\Models\RoleApply;
 
 class BlockController extends Controller
 {
@@ -141,6 +144,177 @@ class BlockController extends Controller
             } else {
                 return $this->resData('当前用户没权限', 4);
             }
+        } catch (\Exception $e) {
+            return $this->resData('fail', 0, $e);
+        }
+    }
+
+    /**
+     * 上传台账数据
+     */
+    public function insAccount(Request $request)
+    {
+        try {
+            $token = $request->token;
+            $user = new User();
+            $id = $user->getIdForToken($token);
+            if (!$id) {
+                return $this->resData('用户未登录', 2);
+            }
+            $role = $user->getEstateRole($id);
+            if ($role->linkage_role > 1) {
+                $name = $request->name;
+                $number = $request->number;
+                $ua = new UserAccount();
+                $result = $ua->insAccount($name, $number);
+                if ($result) {
+                    return $this->resData('success', 1, '已将数据加入到台账表');
+                } else {
+                    return $this->resData('success', 1, '台账表已存在该数据');
+                }
+            }
+        } catch (\Exception $e) {
+            return $this->resData('fail', 0, $e);
+        }
+    }
+
+    /**
+     * 返回权限
+     */
+    public function getEstateRoles()
+    {
+        try {
+            $er = new EstateRole();
+            $estateRoles = $er->getEstateRoles();
+            return $this->resData('success', 1, $estateRoles);
+        } catch (\Exception $e) {
+            return $this->resData('fail', 0, $e);
+        }
+    }
+
+    /**
+     * 接受权限申请数据
+     */
+    public function insApplyRole(Request $request)
+    {
+        try {
+            $token = $request->token;
+            $user = new User();
+            $id = $user->getIdForToken($token);
+            if (!$id) {
+                return $this->resData('用户未登录', 2);
+            }
+
+            $roleId = $request->roleid;
+            $ra = new RoleApply();
+            $result = $ra->insertGetId(['user_id' => $id, 'apply_role_id' => $roleId, 'created_at' => Carbon::now()->toDateTimeString()]);
+            if ($result) {
+                return $this->resData('success', 1);
+            } else {
+                return $this->resData('fail', 1);
+            }
+        } catch (\Exception $e) {
+            return $this->resData('fail', 0, $e);
+        }
+    }
+
+    /**
+     * 获取个人权限申请记录
+     */
+    public function getUserRoleApplies(Request $request)
+    {
+        try {
+            $token = $request->token;
+            $user = new User();
+            $id = $user->getIdForToken($token);
+            if (!$id) {
+                return $this->resData('用户未登录', 2);
+            }
+            $roleApply = new RoleApply();
+            $roleApplies = $roleApply->getRoleApplies($id);
+            return $this->resData('success', 1, $roleApplies);
+        } catch (\Exception $e) {
+            return $this->resData('fail', 0, $e);
+        }
+    }
+
+    /**
+     * 消息处理的权限确认
+     */
+    public function checkUserRole(Request $request)
+    {
+        try {
+            $token = $request->token;
+            $user = new User();
+            $id = $user->getIdForToken($token);
+            if (!$id) {
+                return $this->resData('用户未登录', 2);
+            }
+            $role = $user->getEstateRole($id);
+            if ($role->linkage_role == 3) {
+                return $this->resData('success', 1);
+            } else {
+                return $this->resData('success', 3);
+            }
+        } catch (\Exception $e) {
+            return $this->resData('fail', 0, $e);
+        }
+    }
+
+    /**
+     * 获取申请列表
+     */
+    public function getApplyList(Request $request)
+    {
+        try {
+            $token = $request->token;
+            $user = new User();
+            $id = $user->getIdForToken($token);
+            if (!$id) {
+                return $this->resData('用户未登录', 2);
+            }
+
+            $ra = new RoleApply();
+            $list = $ra->getAllApply();
+            return $this->resData('successs', 1, $list);
+        } catch (\Exception $e) {
+            return $this->resData('fail', 0, $e);
+        }
+    }
+
+    /**
+     * 更改申请状态
+     */
+    public function editApply(Request $request)
+    {
+        try {
+            $applyId = $request->applyid;
+            $state = $request->state;
+            $token = $request->token;
+
+            $user = new User();
+            $id = $user->getIdForToken($token);
+            if (!$id) {
+                return $this->resData('用户未登录', 2);
+            }
+            // 判断用户权限
+            $role = $user->find($id);
+            if ($role->linkage_role < 3) {
+                return $this->resData('用户权限不够', 3);
+            }
+            // 修改申请的状态
+            $apply = new RoleApply();
+            $apply->where('id', $applyId)->update(['state' => $state]);
+            
+            // 修改用户申请的权限
+            if ($state == 1) {
+                $roleApply = $apply->find($applyId);
+                $userId = $roleApply->user_id;
+                $roleId = $roleApply->apply_role_id;
+                $user->where('id', $userId)->update(['linkage_role' => $roleId]);
+            }
+
+            return $this->resData('successs', 1, $roleApply);
         } catch (\Exception $e) {
             return $this->resData('fail', 0, $e);
         }

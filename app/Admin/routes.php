@@ -31,4 +31,6 @@ Route::group([
     $router->resource('shopbusinesses', ShopBusinessController::class);
     // 招商
     $router->resource('investmentes', InvestmentController::class);
+    // 电商推荐用户台账
+    $router->resource('useraccountes', UserAccountController::class);
 });

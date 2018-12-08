@@ -59,7 +59,15 @@ $api->version('v1', [
     $api->post('checklinkagerole', 'UserController@checkLinkageRole');
     $api->post('scancodelinkage', 'BlockController@getLinkageInfo');
     $api->post('roleinfo', 'UserController@getRoleInfo');
-    
+    $api->post('insaccount', 'BlockController@insAccount');
+    $api->get('estateroles', 'BlockController@getEstateRoles');
+    $api->post('insapplyrole', 'BlockController@insApplyRole');
+    $api->post('userroleapplies', 'BlockController@getUserRoleApplies');
+    $api->post('checkapplyrole', 'BlockController@checkUserRole');
+    $api->post('allapply', 'BlockController@getApplyList');
+    $api->post('setapply', 'BlockController@editApply');
+    $api->post('checktoken', 'UserController@checkToken');
+
     // 测试
     $api->post('test', 'UserController@getRoleInfo');
 

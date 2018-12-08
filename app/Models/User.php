@@ -41,6 +41,10 @@ class User extends Authenticatable
         return $this->belongsTo('App\Models\EstateRole', 'linkage_role', 'linkage_role');
     }
     
+    public function roleApplies()
+    {
+        return $this->hasMany('App\Models\RoleApply', 'user_id', 'id');
+    }
     /**
      * 检查登录情况
      * 通过token获取id
@@ -57,6 +61,8 @@ class User extends Authenticatable
         if(!$row){
             return false;
         }
+        // 登录态续期
+        Cache::put($token, $openid, 110);
         // 满足以上条件返回user_id
         return $row->id;
     }
@@ -68,5 +74,19 @@ class User extends Authenticatable
     {
         $row = $this->with('role')->where('id', $id)->first();
         return $row->role;
+    }
+
+    /**
+     * 检查登录态情况
+     */
+    public function checkToken($token)
+    {
+        if(Cache::has($token)){
+            $openid = Cache::get($token);
+            Cache::put($token, $openid, 110);
+            return true;
+        }else{
+            return false;
+        }
     }
 }

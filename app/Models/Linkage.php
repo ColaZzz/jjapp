@@ -95,22 +95,19 @@ class Linkage extends Model
     {
         $linkage = $this->find($id);
         $username = $linkage->username;
-        $firstName = substr($username, 0, 1);
+        $firstName = mb_substr($username, 0, 1);
         $userNumber = $linkage->user_number;
-        $firstNumber = substr($userNumber, 0, 3);
-        $lastNumber = substr($userNumber, -4);
+        $firstNumber = mb_substr($userNumber, 0, 3);
+        $lastNumber = mb_substr($userNumber, -4);
 
+        $date = date('Y-m-d');
         $userAccount = new UserAccount();
+        // 获取模糊的数据
         $result = $userAccount->where([
             ['user_number', 'like', $firstNumber.'%'.$lastNumber],
             ['username', 'like', $firstName.'%']
         ])->get();
         // 是否存在用户数据
         return $result;
-    }
-
-    public function insAccount($name, $number)
-    {
-        
     }
 }

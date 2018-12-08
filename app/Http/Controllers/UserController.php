@@ -92,4 +92,22 @@ class UserController extends Controller
             return $this->resData('fail', 0, $e);
         }
     }
+
+    /**
+     * 检查登录态是否过期
+     */
+    public function checkToken(Request $request)
+    {
+        try{
+            $token = $request->token;
+            $user = new User();
+            if($user->checkToken($token)){
+                return $this->resData('登录态未过期', 1);
+            }else{
+                return $this->resData('登录态已失效', 2);
+            }
+        }catch(\Exception $e){
+            return $this->resData('fail', 0, $e);
+        }
+    }
 }
