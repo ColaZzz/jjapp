@@ -106,7 +106,9 @@ class Linkage extends Model
         $result = $userAccount->where([
             ['user_number', 'like', $firstNumber.'%'.$lastNumber],
             ['username', 'like', $firstName.'%']
-        ])->get();
+        ])
+        ->whereNotIn('visit', [$date])
+        ->get();
         // 是否存在用户数据
         return $result;
     }
