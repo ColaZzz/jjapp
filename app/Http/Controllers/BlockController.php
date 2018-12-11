@@ -314,7 +314,7 @@ class BlockController extends Controller
                 $user->where('id', $userId)->update(['linkage_role' => $roleId]);
             }
 
-            return $this->resData('successs', 1, $roleApply);
+            return $this->resData('successs', 1);
         } catch (\Exception $e) {
             return $this->resData('fail', 0, $e);
         }
