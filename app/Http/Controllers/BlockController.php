@@ -427,4 +427,32 @@ class BlockController extends Controller
             return $this->resData('fail', 0, $e);
         }
     }
+
+    /**
+     * 获取单行用户台账信息
+     */
+    public function geteUserAccountForId(Request $request)
+    {
+        try {
+            $token = $request->token;
+            $user = new User();
+            $id = $user->getIdForToken($token);
+            if (!$id) {
+                return $this->resData('用户未登录', 2);
+            }
+            $role = $user->getEstateRole($id);
+            if ($role->linkage_role >= $this->followRole) {
+                //搜索授权成功
+                $uaId = $request->id;
+                $userAccount = new UserAccount();
+                $result = $userAccount->getUserAccountForId($uaId);
+                return $this->resData('返回信息', 1, $result);
+            } else {
+                // 搜索授权失败
+                return $this->resData('success', 3);
+            }
+        } catch (\Exception $e) {
+            return $this->resData('fail', 0, $e);
+        }
+    }
 }

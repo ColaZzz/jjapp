@@ -70,6 +70,7 @@ $api->version('v1', [
     $api->post('checkfollowrole', 'BlockController@checkFollowRole');
     $api->post('getaccountforword', 'BlockController@getUserAccountes');
     $api->post('editaccount', 'BlockController@editUserAccount');
+    $api->post('getuseraccount', 'BlockController@geteUserAccountForId');
 
     // 测试
     $api->post('test', 'UserController@getRoleInfo');

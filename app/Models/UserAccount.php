@@ -44,4 +44,9 @@ class UserAccount extends Model
         ->orWhere('username', 'like', '%'.$word.'%')
         ->get();
     }
+
+    public function getUserAccountForId($id)
+    {
+        return $this->find($id);
+    }
 }
