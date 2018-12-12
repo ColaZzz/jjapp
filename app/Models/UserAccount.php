@@ -9,6 +9,11 @@ class UserAccount extends Model
 {
     protected $table = 'user_account';
 
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User', 'follower', 'id');
+    }
+
     public function insAccount($name, $number)
     {
         $row = $this->where([
@@ -21,5 +26,22 @@ class UserAccount extends Model
         }else{
             return false;
         }
+    }
+
+    public function updateFollow($follower, $userAccountId, $state)
+    {
+        return $this->where('id', $userAccountId)
+        ->update([
+            'follow' => $state, 
+            'follower' => $follower, 
+            'follow_date' => Carbon::now()->toDateString()
+            ]);
+    }
+
+    public function searchWord($word)
+    {
+        return $this->where('user_number', 'like', '%'.$word)
+        ->orWhere('username', 'like', '%'.$word.'%')
+        ->get();
     }
 }

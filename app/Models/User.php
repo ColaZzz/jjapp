@@ -45,6 +45,11 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\RoleApply', 'user_id', 'id');
     }
+
+    public function userAccountes()
+    {
+        return $this->hasMany('App\Models\UserAccount', 'follower', 'id');
+    }
     /**
      * 检查登录情况
      * 通过token获取id

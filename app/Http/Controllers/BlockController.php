@@ -15,6 +15,7 @@ use App\Models\RoleApply;
 
 class BlockController extends Controller
 {
+    public $followRole = 2;
     /**
      * 接收联动数据
      */
@@ -315,6 +316,113 @@ class BlockController extends Controller
             }
 
             return $this->resData('successs', 1);
+        } catch (\Exception $e) {
+            return $this->resData('fail', 0, $e);
+        }
+    }
+
+    /**
+     * 更改跟进状态
+     */
+    public function changeFollow(Request $request)
+    {
+        try{
+            $token = $request->token;
+            $user = new User();
+            $id = $user->getIdForToken($token);
+            if(!$id){
+                return $this->resData('用户未登录', 2);
+            }
+            $state = $request->state;
+            $userAccountId = $request->accountid;
+            $userAccount = new UserAccount();
+            $userAccount->updateFollow($id, $userAccountId, $state);
+            return $this->resData('success', 1);
+        }catch(\Exception $e){
+            return $this->resData('fail', 0, $e);
+        }
+    }
+
+    /**
+     * 客户跟进的权限确认
+     */
+    public function checkFollowRole(Request $request)
+    {
+        try {
+            $token = $request->token;
+            $user = new User();
+            $id = $user->getIdForToken($token);
+            if (!$id) {
+                return $this->resData('用户未登录', 2);
+            }
+            $role = $user->getEstateRole($id);
+            if ($role->linkage_role >= $this->followRole) {
+                return $this->resData('success', 1);
+            } else {
+                return $this->resData('success', 3);
+            }
+        } catch (\Exception $e) {
+            return $this->resData('fail', 0, $e);
+        }
+    }
+
+    /**
+     * 跟进搜索客户资料
+     */
+    public function getUserAccountes(Request $request)
+    {
+        try {
+            $token = $request->token;
+            $user = new User();
+            $id = $user->getIdForToken($token);
+            if (!$id) {
+                return $this->resData('用户未登录', 2);
+            }
+            $role = $user->getEstateRole($id);
+            if ($role->linkage_role >= $this->followRole) {
+                //搜索授权成功
+                $word = $request->word;
+                $userAccount = new UserAccount();
+                $data = $userAccount->searchWord($word);
+                return $this->resData('success', 1, $data);
+            } else {
+                // 搜索授权失败
+                return $this->resData('success', 3);
+            }
+        } catch (\Exception $e) {
+            return $this->resData('fail', 0, $e);
+        }
+    }
+
+    /**
+     * 跟进搜索客户资料
+     */
+    public function editUserAccount(Request $request)
+    {
+        try {
+            $token = $request->token;
+            $user = new User();
+            $id = $user->getIdForToken($token);
+            if (!$id) {
+                return $this->resData('用户未登录', 2);
+            }
+            $role = $user->getEstateRole($id);
+            if ($role->linkage_role >= $this->followRole) {
+                //搜索授权成功
+                $worker = $request->worker;
+                $userAccountId = $request->useraccountid;
+                $state = $request->state;
+                $userAccount = new UserAccount();
+                $result = $userAccount->updateFollow($worker, $userAccountId, $state);
+                if($result){
+                    return $this->resData('已跟进', 1);
+                }else{
+                    return $this->resData('数据更新时失败', 1);
+                }
+            } else {
+                // 搜索授权失败
+                return $this->resData('success', 3);
+            }
         } catch (\Exception $e) {
             return $this->resData('fail', 0, $e);
         }

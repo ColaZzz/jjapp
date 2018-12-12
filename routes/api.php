@@ -67,6 +67,9 @@ $api->version('v1', [
     $api->post('allapply', 'BlockController@getApplyList');
     $api->post('setapply', 'BlockController@editApply');
     $api->post('checktoken', 'UserController@checkToken');
+    $api->post('checkfollowrole', 'BlockController@checkFollowRole');
+    $api->post('getaccountforword', 'BlockController@getUserAccountes');
+    $api->post('editaccount', 'BlockController@editUserAccount');
 
     // 测试
     $api->post('test', 'UserController@getRoleInfo');
