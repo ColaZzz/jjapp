@@ -84,11 +84,21 @@ class UserAccountController extends Controller
         $grid->id('Id');
         $grid->username('客户姓名');
         $grid->user_number('联系方式');
-        $grid->visit('上门日期');
+        $grid->visit('上门日期')->sortable();
         $grid->worker('置业顾问');
         $grid->mode('上门渠道');
-        $grid->created_at('创建时间');
+        $grid->created_at('创建时间')->sortable();
         $grid->updated_at('更新时间');
+
+        $grid->filter(function($filter){
+
+            // 去掉默认的id过滤器
+            $filter->disableIdFilter();
+        
+            // 在这里添加字段过滤器
+            $filter->like('username', '客户姓名');
+            $filter->like('user_number', '联系方式');
+        });
 
         return $grid;
     }

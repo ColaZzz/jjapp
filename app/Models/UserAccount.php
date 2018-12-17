@@ -16,14 +16,22 @@ class UserAccount extends Model
 
     public function insAccount($name, $number)
     {
+        $today = Carbon::now()->toDateString();
         $row = $this->where([
             ['username', $name],
             ['user_number', $number]
-        ])->get();
-        if(count($row) == 0){
-            $this->insert(['username' => $name, 'user_number' => $number, 'visit' => Carbon::now()->toDateString(),'created_at' => Carbon::now()->toDateTimeString()]);
+        ])
+        ->whereDate('created_at', $today)
+        ->get();
+        if (count($row) == 0) {
+            $this->insert([
+                'username' => $name,
+                'user_number' => $number,
+                'visit' => $today,
+                'created_at' => Carbon::now()->toDateTimeString()
+                ]);
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -32,8 +40,8 @@ class UserAccount extends Model
     {
         return $this->where('id', $userAccountId)
         ->update([
-            'follow' => $state, 
-            'follower' => $follower, 
+            'follow' => $state,
+            'follower' => $follower,
             'follow_date' => Carbon::now()->toDateString()
             ]);
     }
