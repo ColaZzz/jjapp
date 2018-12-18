@@ -85,12 +85,12 @@ class UserAccountController extends Controller
         $grid->username('客户姓名');
         $grid->user_number('联系方式');
         $grid->visit('上门日期')->sortable();
-        $grid->worker('置业顾问');
-        $grid->mode('上门渠道');
+        $grid->follower('跟进人员');
+        $grid->follow_date('跟进日期');
         $grid->created_at('创建时间')->sortable();
         $grid->updated_at('更新时间');
 
-        $grid->filter(function($filter){
+        $grid->filter(function ($filter) {
 
             // 去掉默认的id过滤器
             $filter->disableIdFilter();
@@ -98,10 +98,27 @@ class UserAccountController extends Controller
             // 在这里添加字段过滤器
             $filter->like('username', '客户姓名');
             $filter->like('user_number', '联系方式');
-            $filter->year('created_at', '年份');
-            $filter->month('created_at', '月份');
-            $filter->day('created_at', '日期');
+            $filter->where(function ($query) {
+                $query->whereDate('visit', "{$this->input}");
+            }, '日期');
+            $filter->in('follow')->checkbox([
+                0    => '无跟进',
+                1    => '跟进',
+            ]);
+            $filter->where(function ($query) {
+                $query->where('user_number', 'not like', "%{$this->input}%");
+            }, '全号')->select([
+                '*'    => '全号',
+            ]);
+            $filter->where(function ($query) {
+                $query->where('user_number', 'like', "%{$this->input}%");
+            }, '非全号')->select([
+                '*'    => '非全号',
+            ]);
         });
+
+        $grid->disableCreateButton();
+        $grid->disableActions();
 
         return $grid;
     }
@@ -120,8 +137,8 @@ class UserAccountController extends Controller
         $show->username('客户姓名');
         $show->user_number('联系方式');
         $show->visit('上门日期');
-        $show->worker('置业顾问');
-        $show->mode('上门渠道');
+        $show->follower('跟进人员');
+        $show->follow_date('跟进日期');
         $show->created_at('创建时间');
         $show->updated_at('更新时间');
 
@@ -140,8 +157,8 @@ class UserAccountController extends Controller
         $form->text('username', '客户姓名');
         $form->text('user_number', '联系方式');
         $form->date('visit', '上门日期')->default(date('Y-m-d'));
-        $form->text('worker', '置业顾问');
-        $form->text('mode', '上门渠道');
+        $form->text('follower', '跟进人员');
+        $form->text('follow_date', '跟进日期');
 
         return $form;
     }
