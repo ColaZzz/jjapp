@@ -98,6 +98,9 @@ class UserAccountController extends Controller
             // 在这里添加字段过滤器
             $filter->like('username', '客户姓名');
             $filter->like('user_number', '联系方式');
+            $filter->year('created_at', '年份');
+            $filter->month('created_at', '月份');
+            $filter->day('created_at', '日期');
         });
 
         return $grid;
