@@ -71,6 +71,7 @@ $api->version('v1', [
     $api->post('getaccountforword', 'BlockController@getUserAccountes');
     $api->post('editaccount', 'BlockController@editUserAccount');
     $api->post('getuseraccount', 'BlockController@geteUserAccountForId');
+    $api->post('editlinkageusernumber', 'BlockController@editLinkageNumber');
 
     // 测试
     $api->post('test', 'UserController@getRoleInfo');

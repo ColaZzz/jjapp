@@ -455,4 +455,33 @@ class BlockController extends Controller
             return $this->resData('fail', 0, $e);
         }
     }
+
+    /**
+     * 更改提交的联动单的电话号码
+     */
+    public function editLinkageNumber(Request $request)
+    {
+        try {
+            $token = $request->token;
+            $user = new User();
+            $id = $user->getIdForToken($token);
+            if (!$id) {
+                return $this->resData('用户未登录', 2);
+            }
+            $lid = $request->lid;
+            $userNumber = $request->usernumber;
+            $linkage = new Linkage();
+            $linkages = $linkage->find($lid);
+            if($id != $linkages->user_id){
+                return $this->resData('用户身份不正确', 3);
+            }
+            $isSuccess = $linkage->where('id', $lid)
+            ->update(['user_number' => $userNumber]);
+            if($isSuccess){
+                return $this->resData('已修改', 1);
+            }
+        } catch (\Exception $e) {
+            return $this->resData('fail', 0, $e);
+        }
+    }
 }
