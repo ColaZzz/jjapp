@@ -81,6 +81,8 @@ class UserAccountController extends Controller
     {
         $grid = new Grid(new UserAccount);
 
+        $grid->model()->orderBy('created_at','desc');
+
         $grid->id('Id');
         $grid->username('客户姓名');
         $grid->user_number('联系方式');
