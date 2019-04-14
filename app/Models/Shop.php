@@ -37,7 +37,7 @@ class Shop extends Model
             return $query->where('shop_business_id', $business);
         })
         ->orderBy('rank', 'desc')
-        ->get();
+        ->paginate(8);
     }
 
     /**

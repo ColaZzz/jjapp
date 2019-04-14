@@ -101,7 +101,7 @@ class ShopsController extends Controller
     }
 
     /**
-     * 获取商铺下所有的商铺
+     * 获取商铺下所有的商品
      */
     public function commodities(Request $request)
     {
