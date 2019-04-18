@@ -49,8 +49,11 @@ class ShopsController extends Controller
     public function topshop(Request $request)
     {
         try {
+            $paginate = $request->paginate;
+            $time = $request->time;
+            $rank = $request->rank;
             $shop = new Shop();
-            $topshopes = $shop->getTopShop();
+            $topshopes = $shop->getTopShop($paginate, $time, $rank);
             return $this->resData('返回', 1, $topshopes);
         } catch (\Expection $e) {
             return $this->resData('bug', 0, $e);

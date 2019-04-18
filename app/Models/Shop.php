@@ -28,12 +28,11 @@ class Shop extends Model
     public function getShops($floor, $business)
     {
         return $this
-        ->with('business')
-        ->with('floor')
-        ->when($floor, function($query) use ($floor){
+        ->with(['business:id,business_name','floor:id,floor_name'])
+        ->when($floor, function ($query) use ($floor) {
             return $query->where('shop_floor_id', $floor);
         })
-        ->when($business, function($query) use ($business){
+        ->when($business, function ($query) use ($business) {
             return $query->where('shop_business_id', $business);
         })
         ->orderBy('rank', 'desc')
@@ -46,6 +45,7 @@ class Shop extends Model
     public function getSwiperes()
     {
         return $this
+        ->select('id', 'img_url', 'title', 'subtitle')
         ->where('indexpage', '1')
         ->orderBy('created_at', 'desc')
         ->limit(5)
@@ -55,12 +55,18 @@ class Shop extends Model
     /**
      * 获取主力商铺
      */
-    public function getTopShop()
+    public function getTopShop($paginate, $time, $rank)
     {
         return $this
+        ->select('id', 'title', 'subtitle', 'img_url', 'icon_url')
         ->where('type_top', '1')
-        ->orderBy('rank', 'desc')
-        ->get();
+        ->when($time, function ($query) use ($time) {
+            return $query->orderby('created_at', $time);
+        })
+        ->when($rank, function ($query) use ($rank) {
+            return $query->orderby('rank', $rank);
+        })
+        ->paginate($paginate);
     }
 
     /**

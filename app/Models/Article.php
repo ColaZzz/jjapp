@@ -10,15 +10,20 @@ class Article extends Model
      * 获取不同类型的文章
      * @param int $type 文章类型
      */
-    public function getArticleForType($type, $time, $rank)
+    public function getArticleForType($type, $time, $rank, $paginate)
     {
-        $primary;
+        $primary = null;
         if ($time || $rank) {
             $primary = false;
         } else {
             $primary = 'desc';
         }
+        // 判断分页数
+        if(!$paginate){
+            $paginate = 8;
+        }
         return $this
+        ->select('id','title','subtitle','img_url')
         ->when($type, function ($query) use ($type) {
             return $query->where('type', $type);
         })
@@ -31,7 +36,7 @@ class Article extends Model
         ->when($rank, function ($query) use ($rank) {
             return $query->orderBy('rank', $rank);
         })
-        ->paginate(8);
+        ->paginate($paginate);
     }
 
     /**

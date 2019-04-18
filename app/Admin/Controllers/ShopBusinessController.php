@@ -103,6 +103,7 @@ class ShopBusinessController extends Controller
         $show->id('Id');
         $show->business_name('分类');
         $show->rank('排序');
+        $show->icon_url('业态图标');
         $show->created_at('创建时间');
         $show->updated_at('最后更新');
 
@@ -120,7 +121,8 @@ class ShopBusinessController extends Controller
 
         $form->text('business_name', '分类');
         $form->number('rank', '排序');
-
+        $form->image('icon_url', '业态图标');
+        
         return $form;
     }
 }

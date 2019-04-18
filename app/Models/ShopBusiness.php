@@ -14,6 +14,7 @@ class ShopBusiness extends Model
     public function getBusiness()
     {
         return $this
+        ->select('id','business_name','icon_url')
         ->orderBy('rank', 'desc')
         ->get();
     }

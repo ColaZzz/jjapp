@@ -13,8 +13,9 @@ class ArticleController extends Controller
             $type = $request->type;
             $time = $request->time;
             $rank = $request->rank;
+            $paginate = $request->paginate;
             $art = new Article();
-            $articles = $art->getArticleForType($type, $time, $rank);
+            $articles = $art->getArticleForType($type, $time, $rank, $paginate);
             return $this->resData('返回成功', 1, $articles);
         } catch (\Exception $e) {
             return $this->resData('返回失败', 0, $e);
