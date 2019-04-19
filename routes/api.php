@@ -23,6 +23,7 @@ $api->version('v1', [
     $api->get('mallshop', 'ShopsController@shop');
     $api->get('mallcommodities', 'ShopsController@commodities');
     $api->get('mallcommodity', 'ShopsController@commodity');
+    $api->get('mallsearch', 'ShopsController@searchShop');
 
 
     // 住宅

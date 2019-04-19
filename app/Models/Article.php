@@ -19,11 +19,11 @@ class Article extends Model
             $primary = 'desc';
         }
         // 判断分页数
-        if(!$paginate){
+        if (!$paginate) {
             $paginate = 8;
         }
         return $this
-        ->select('id','title','subtitle','img_url')
+        ->select('id', 'title', 'subtitle', 'img_url', 'created_at', 'state')
         ->when($type, function ($query) use ($type) {
             return $query->where('type', $type);
         })

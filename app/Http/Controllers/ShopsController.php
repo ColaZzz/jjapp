@@ -21,8 +21,10 @@ class ShopsController extends Controller
         try {
             $floor = $request->floor;
             $business = $request->business;
+            $paginate = $request->paginate;
+            $word = $request->word;
             $shop = new Shop();
-            $shops = $shop->getShops($floor, $business);
+            $shops = $shop->getShops($floor, $business, $paginate, $word);
             return $this->resData('返回', 1, $shops);
         } catch (\Expection $e) {
             return $this->resData('bug', 0, $e);
@@ -223,6 +225,22 @@ class ShopsController extends Controller
             return view('mall.success_result');
         } catch (\Exception $e) {
             return view('mall.fail_result');
+        }
+    }
+
+    /**
+     * 店铺搜索
+     */
+    public function searchShop(Request $request)
+    {
+        try {
+            $word = $request->word;
+            $paginate = $request->paginate;
+            $shop = new Shop();
+            $shopList = $shop->searchShop($word, $paginate);
+            return $this->resData('success', 1, $shopList);
+        } catch (\Expection $e) {
+            return $this->resData('bug', 0, $e);
         }
     }
 }

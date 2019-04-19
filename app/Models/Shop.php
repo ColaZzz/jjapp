@@ -25,18 +25,25 @@ class Shop extends Model
     /**
      * 楼层或业态分类
      */
-    public function getShops($floor, $business)
+    public function getShops($floor, $business, $paginate, $word)
     {
+        if (!$paginate) {
+            $paginate = 8;
+        }
         return $this
         ->with(['business:id,business_name','floor:id,floor_name'])
+        ->select('id', 'title', 'subtitle', 'img_url', 'shop_business_id', 'shop_floor_id', 'rank')
         ->when($floor, function ($query) use ($floor) {
             return $query->where('shop_floor_id', $floor);
         })
         ->when($business, function ($query) use ($business) {
             return $query->where('shop_business_id', $business);
         })
+        ->when($word, function ($query) use ($word) {
+            return $query->where('title', 'like', '%'.$word.'%');
+        })
         ->orderBy('rank', 'desc')
-        ->paginate(8);
+        ->paginate($paginate);
     }
 
     /**
@@ -79,5 +86,19 @@ class Shop extends Model
         ->with('floor')
         ->where('id', $id)
         ->first();
+    }
+
+    /**
+     * 店铺搜索
+     */
+    public function searchShop($word, $paginate)
+    {
+        if (!$paginate) {
+            $paginate = 8;
+        }
+        return $this
+        ->select('id', 'title', 'subtitle', 'img_url')
+        ->where('title', 'like', '%'.$word.'%')
+        ->paginate($paginate);
     }
 }
