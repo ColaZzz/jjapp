@@ -94,14 +94,13 @@ class ShopController extends Controller
         $grid->updated_at('Updated at');
 
         //搜索框
-        $grid->filter(function($filter){
+        $grid->filter(function ($filter) {
 
             // 去掉默认的id过滤器
             $filter->disableIdFilter();
         
             // 在这里添加字段过滤器
             $filter->like('title', '店名');
-        
         });
 
         return $grid;
@@ -163,7 +162,7 @@ class ShopController extends Controller
         // $form->number('flag', 'Flag');
         $form->text('search_word', '搜索关键字');
         $form->number('rank', '排序');
-
+        $form->text('business_hours', '营业时间');
         return $form;
     }
 }
