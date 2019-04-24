@@ -32,7 +32,7 @@ class Shop extends Model
         }
         return $this
         ->with(['business:id,business_name','floor:id,floor_name'])
-        ->select('id', 'title', 'subtitle', 'img_url', 'shop_business_id', 'shop_floor_id', 'rank', 'average_spent')
+        ->select('id', 'title', 'subtitle', 'img_url', 'shop_business_id', 'shop_floor_id', 'rank', 'average_spent', 'customize_type')
         ->when($floor, function ($query) use ($floor) {
             return $query->where('shop_floor_id', $floor);
         })
