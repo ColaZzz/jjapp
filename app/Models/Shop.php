@@ -23,6 +23,13 @@ class Shop extends Model
     }
 
     /**
+     * 关联关系
+     */
+    public function commodities()
+    {
+        return $this->hasMany('App\Models\Commodity', 'shop_id', 'id');
+    }
+    /**
      * 楼层或业态分类
      */
     public function getShops($floor, $business, $paginate, $word)
@@ -100,5 +107,15 @@ class Shop extends Model
         ->select('id', 'title', 'subtitle', 'img_url')
         ->where('title', 'like', '%'.$word.'%')
         ->paginate($paginate);
+    }
+
+    /**
+     * 后台select商铺选项
+     */
+    public function getSelectShop()
+    {
+        return $this
+        ->select('id', 'title')
+        ->get();
     }
 }

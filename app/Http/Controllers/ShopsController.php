@@ -176,6 +176,25 @@ class ShopsController extends Controller
     }
 
     /**
+     * 后台商铺select选项接口
+     */
+    public function showSelectShop()
+    {
+        try {
+            $shop = new Shop();
+            $shops = $shop->getSelectShop();
+            $rows = array();
+            foreach ($shops as $shop) {
+                $row['id'] = $shop->id;
+                $row['text'] = $shop->title;
+                array_push($rows, $row);
+            }
+            return $rows;
+        } catch (\Expection $e) {
+            return $this->resData('bug', 0, $e);
+        }
+    }
+    /**
      * 品牌招商页面
      */
     public function investmentView()

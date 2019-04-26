@@ -135,6 +135,12 @@ class ShopController extends Controller
         $show->created_at('Created at');
         $show->updated_at('Updated at');
 
+        $show->commodities('商品', function($commodities){
+            $commodities->resource('/admin/commodities');
+
+            $commodities->id();
+            $commodities->name();
+        });
         return $show;
     }
 

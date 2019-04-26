@@ -33,4 +33,6 @@ Route::group([
     $router->resource('investmentes', InvestmentController::class);
     // 电商推荐用户台账
     $router->resource('useraccountes', UserAccountController::class);
+    // 商铺->商品
+    $router->resource('commodities', CommodityController::class);
 });
