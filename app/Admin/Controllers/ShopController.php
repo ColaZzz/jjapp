@@ -83,7 +83,7 @@ class ShopController extends Controller
 
         $grid->id('Id');
         $grid->title('商铺名');
-        $grid->icon_url('商标')->image();
+        // $grid->icon_url('商标')->image();
         $grid->img_url('封面')->image();
         $grid->address('地址');
         $grid->customize_type('自定义子分类');
@@ -119,8 +119,9 @@ class ShopController extends Controller
         $show->id('Id');
         $show->title('商铺名');
         $show->subtitle('副标题');
-        $show->icon_url('商标')->image();
+        // $show->icon_url('商标')->image();
         $show->img_url('封面')->image();
+        $show->map_url('商铺位置')->image();
         $show->address('地址');
         $show->introduction('内容')->editor();
         $show->type_top('是否置顶');
@@ -155,8 +156,9 @@ class ShopController extends Controller
 
         $form->text('title', '*商铺名');
         $form->text('subtitle', '副标题');
-        $form->image('icon_url', '商标')->uniqueName();
+        // $form->image('icon_url', '商标')->uniqueName();
         $form->image('img_url', '封面')->uniqueName();
+        $form->image('map_url', '商铺位置')->uniqueName();
         $form->text('address', '地址');
         $form->editor('introduction', '内容');
         $form->radio('type_top', '是否置顶')->options([0=>'否', 1=>'是']);
