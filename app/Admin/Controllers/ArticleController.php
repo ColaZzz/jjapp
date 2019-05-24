@@ -148,7 +148,7 @@ class ArticleController extends Controller
         $form->image('img_url', '* 封面')->uniqueName();
         $form->text('subtitle', '* 副标题');
         $form->select('state', '* 状态')->options(['正在进行' => '正在进行', '尚未开始' => '尚未开始', '已结束' => '已结束']);
-        $form->editor('information', '* 内容');
+        $form->kindeditor('information', '* 内容');
         $form->number('rank', '* 排序');
         // $form->number('flag', 'Flag');
         // $form->radio('type', '类型')->options([1 => '活动资讯', 2 => '商家资讯',]);

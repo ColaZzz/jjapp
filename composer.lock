@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9be4c11c24d9a8e2d00e4a2ee908c010",
+    "content-hash": "39a3e471a02dc1e3bf99febf11991f52",
     "packages": [
         {
             "name": "caouecs/laravel-lang",
@@ -4265,6 +4265,67 @@
             "time": "2018-01-29T19:49:41+00:00"
         },
         {
+            "name": "yxx/kindeditor",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/youyingxiang/kindeditor.git",
+                "reference": "954fbe120c6cc6ea6322b05b7a6fce2ddbc3ecc4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/youyingxiang/kindeditor/zipball/954fbe120c6cc6ea6322b05b7a6fce2ddbc3ecc4",
+                "reference": "954fbe120c6cc6ea6322b05b7a6fce2ddbc3ecc4",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "doctrine/dbal": "2.*",
+                "encore/laravel-admin": "~1.6",
+                "laravel/framework": "~5.5",
+                "php": ">=7.0.0",
+                "symfony/dom-crawler": "~3.1|~4.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Yxx\\Kindeditor\\EditorProvider"
+                    ],
+                    "aliases": {
+                        "Editor": "Yxx\\Kindeditor\\Facades\\Editor::class"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Yxx\\Kindeditor\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "yxx",
+                    "email": "1365831278@qq.com"
+                }
+            ],
+            "description": "laravel-admin kindeditor",
+            "keywords": [
+                "admin",
+                "kindeditor",
+                "laravel"
+            ],
+            "time": "2019-05-23T04:26:40+00:00"
+        },
+        {
             "name": "znck/belongs-to-through",
             "version": "v2.3.1",
             "source": {
@@ -4320,6 +4381,7 @@
                 "models",
                 "znck"
             ],
+            "abandoned": "staudenmeir/belongs-to-through",
             "time": "2017-07-23T13:11:16+00:00"
         }
     ],
