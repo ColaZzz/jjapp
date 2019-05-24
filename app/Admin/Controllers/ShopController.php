@@ -160,7 +160,7 @@ class ShopController extends Controller
         $form->image('img_url', '封面')->uniqueName();
         $form->image('map_url', '商铺位置')->uniqueName();
         $form->text('address', '地址');
-        $form->editor('introduction', '内容');
+        $form->kindeditor('introduction', '内容');
         $form->radio('type_top', '是否置顶')->options([0=>'否', 1=>'是']);
         $form->select('shop_floor_id', '*楼层')->options('/api/selectionofshopfloor');
         $form->select('shop_business_id', '*分类')->options('/api/selectionofshopbusiness');

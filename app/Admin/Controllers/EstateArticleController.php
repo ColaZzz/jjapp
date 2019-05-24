@@ -147,7 +147,7 @@ class EstateArticleController extends Controller
         $form->text('house_area', '* 房屋面积');
         $form->text('payment_proprotion', '* 首付比例');
         $form->text('direction', '* 朝向');
-        $form->editor('content', '简介');
+        $form->kindeditor('content', '简介');
         $form->number('rank', '排序');
         $form->radio('indexpage', '是否在首页显示')->options([ 1 => '是', 0 => '否']);
 
