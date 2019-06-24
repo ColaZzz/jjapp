@@ -23,7 +23,7 @@ class Linkage extends Model
      */
     public function generateKey($id)
     {
-        $key = md5(uniqid());
+        $key = substr(md5(uniqid()),8,16);
         Cache::put($key, $id, 10080);
         return $key;
     }
@@ -73,16 +73,22 @@ class Linkage extends Model
      * @param $state int 是否已经扫描，0未扫描，1已扫描，2全部
      * @return array
      */
-    public function getPersonLinkages($user_id, $state)
+    public function getPersonLinkages($user_id, $state, $word)
     {
         if ($state != 2) {
             return $this->where('user_id', $user_id)
                     ->orderBy('created_at', 'desc')
                     ->where('state', $state)
+                    ->when($word,function($query) use ($word){
+                        return $query->where('user_number','like','%'.$word.'%');
+                    })
                     ->paginate(10);
         } else {
             return $this->where('user_id', $user_id)
                     ->orderBy('created_at', 'desc')
+                    ->when($word,function($query) use ($word){
+                        return $query->where('user_number','like','%'.$word.'%');
+                    })
                     ->paginate(10);
         }
     }

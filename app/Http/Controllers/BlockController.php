@@ -74,6 +74,7 @@ class BlockController extends Controller
         try {
             $token = $request->token;
             $state = $request->state;
+            $word = $request->word;
             $user = new User();
             $linkages = new Linkage();
             $user_id = $user->getIdForToken($token);
@@ -81,7 +82,7 @@ class BlockController extends Controller
                 return $this->resData('用户未登录', 1);
             }
 
-            $linkages = $linkages->getPersonLinkages($user_id, $state);
+            $linkages = $linkages->getPersonLinkages($user_id, $state, $word);
             return $this->resData('获取记录', 1, $linkages);
         } catch (\Exception $e) {
             return $this->resData('fail', 0, $e);
