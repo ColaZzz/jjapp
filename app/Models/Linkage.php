@@ -100,18 +100,24 @@ class Linkage extends Model
     public function firstVisit($id)
     {
         $linkage = $this->find($id);
-        $username = $linkage->username;
-        $firstName = mb_substr($username, 0, 1);
+        
         $userNumber = $linkage->user_number;
         $firstNumber = mb_substr($userNumber, 0, 3);
         $lastNumber = mb_substr($userNumber, -4);
 
+        //使用精确查询后再使用模糊查询
         $date = date('Y-m-d');
         $userAccount = new UserAccount();
-        // 获取模糊的数据
+        //精确查询
         $result = $userAccount->where([
-            ['user_number', 'like', $firstNumber.'%'.$lastNumber],
-            ['username', 'like', $firstName.'%']
+            ['user_number', $userNumber]
+        ])
+        ->whereNotIn('visit', [$date])
+        ->get();
+        if(sizeof($result)) return $result;
+        //模糊查询
+        $result = $userAccount->where([
+            ['user_number', 'like', $firstNumber.'____'.$lastNumber]
         ])
         ->whereNotIn('visit', [$date])
         ->get();
